@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Lora", serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+  
+  /* Authentic Human Foundation Palette (Grounded, Warm, Non-AI, Non-Cyber) */
+  --color-forest: #1b4332;
+  --color-forest-dark: #0f291e;
+  --color-forest-light: #2d6a4f;
+  
+  --color-ochre: #b45309;
+  --color-ochre-light: #d97706;
+  --color-ochre-dark: #92400e;
+  
+  --color-paper: #faf8f5;
+  --color-paper-warm: #f5f2eb;
+  
+  --color-ink: #1c1917;
+  --color-ink-muted: #57534e;
+  --color-ink-subtle: #78716c;
+  
+  --color-stone-border: #e7e5e4;
+  
+  --color-sage: #ecfdf5;
+  --color-sage-text: #065f46;
+  --color-sage-border: #a7f3d0;
+
+  /* Aliases for compatibility */
+  --color-brand-navy: #1b4332;
+  --color-brand-navy-dark: #0f291e;
+  --color-brand-navy-light: #2d6a4f;
+  --color-brand-orange: #b45309;
+  --color-brand-orange-light: #d97706;
+  --color-brand-emerald: #166534;
+  --color-brand-blue-dark: #1b4332;
+  --color-brand-blue-light: #2d6a4f;
+  --color-brand-purple: #1b4332;
+  --color-brand-cyan: #166534;
+}
+
+@layer base {
+  body {
+    background-color: #faf8f5;
+    color: #1c1917;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Subtle Natural Shadows (not harsh black or neon glow) */
+.shadow-soft {
+  box-shadow: 0 2px 8px -2px rgba(28, 25, 23, 0.06), 0 1px 4px -1px rgba(28, 25, 23, 0.04);
+}
+
+.shadow-soft-lg {
+  box-shadow: 0 10px 25px -4px rgba(28, 25, 23, 0.08), 0 4px 10px -2px rgba(28, 25, 23, 0.04);
+}
+
+.shadow-soft-xl {
+  box-shadow: 0 20px 35px -6px rgba(28, 25, 23, 0.1), 0 8px 16px -4px rgba(28, 25, 23, 0.05);
+}
+
+/* Custom Scrollbar - Natural Stone */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f2eb;
+}
+::-webkit-scrollbar-thumb {
+  background: #d6d3d1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a29e;
+}
+
+/* Clean Print Styles for 80G Receipts */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  header, nav, footer, #floating-comms-panel, button:not(.print-include) {
+    display: none !important;
+  }
+  .receipt-printable {
+    box-shadow: none !important;
+    border: 1px solid #78716c !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Organic Hero Wave Ambient Movement */
+@keyframes waveFloatLeft {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-3px, -5px, 0) scale(1.015);
+  }
+}
+
+@keyframes waveFloatRight {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3px, -5px, 0) scale(1.015);
+  }
+}
+
+.animate-wave-left {
+  animation: waveFloatLeft 7s ease-in-out infinite;
+  transform-origin: bottom left;
+}
+
+.animate-wave-right {
+  animation: waveFloatRight 8s ease-in-out infinite;
+  transform-origin: bottom right;
+}
+

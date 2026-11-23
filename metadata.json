@@ -1,0 +1,6 @@
+{
+  "name": "Dev Prabha Foundation",
+  "description": "Official website for Dev Prabha Foundation (DPF), an NGO dedicated to healthcare, education, women empowerment, environment awareness, rural development, and social welfare.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
