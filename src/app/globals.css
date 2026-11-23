@@ -98,32 +98,3 @@
   }
 }
 
-/* Organic Hero Wave Ambient Movement */
-@keyframes waveFloatLeft {
-  0%, 100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(-3px, -5px, 0) scale(1.015);
-  }
-}
-
-@keyframes waveFloatRight {
-  0%, 100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(3px, -5px, 0) scale(1.015);
-  }
-}
-
-.animate-wave-left {
-  animation: waveFloatLeft 7s ease-in-out infinite;
-  transform-origin: bottom left;
-}
-
-.animate-wave-right {
-  animation: waveFloatRight 8s ease-in-out infinite;
-  transform-origin: bottom right;
-}
-

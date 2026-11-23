@@ -46,7 +46,7 @@ export default function RootLayout({
       >
         <Preloader />
         <Navbar />
-        <main className="flex-grow pt-[80px] md:pt-[106px]">{children}</main>
+        <main className="flex-grow pt-[64px] md:pt-[82px]">{children}</main>
         <Footer />
         <BackToTop />
         <FloatingActions />

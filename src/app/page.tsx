@@ -11,10 +11,12 @@ import {
   Stethoscope,
   Users,
   BedDouble,
+  Leaf,
 } from "lucide-react";
 
 // Components
 import QuoteSlider from "@/components/QuoteSlider";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
 // Data
 import {
@@ -167,13 +169,13 @@ export default function HomePage() {
                   >
                     {/* Trust Pill Badge */}
                     <div
-                      className={`inline-flex items-center space-x-2 bg-black/30 backdrop-blur-md border border-white/25 px-4 py-1.5 rounded-full shadow-sm transition-all duration-700 delay-100 ease-out ${
+                      className={`inline-flex items-center space-x-2 bg-black/35 backdrop-blur-md border border-white/25 px-3.5 sm:px-4 py-1.5 rounded-full shadow-sm transition-all duration-700 delay-100 ease-out ${
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 -translate-y-2"
                       }`}
                     >
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <Leaf size={14} className="text-emerald-400 fill-emerald-400 shrink-0" />
                       <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-emerald-300">
                         {slide.tag}
                       </span>
@@ -193,9 +195,9 @@ export default function HomePage() {
                       </span>
                     </h1>
 
-                    {/* Centered Golden Decorative Underline Image Between Hero Title and Sub-content (Equalized Spacing) */}
+                    {/* Centered Golden Decorative Underline Image Between Hero Title and Sub-content (Tight Balanced Spacing) */}
                     <div
-                      className={`transition-all duration-700 delay-250 ease-out !mt-1 sm:!mt-1.5 ${
+                      className={`transition-all duration-700 delay-250 ease-out !-mt-0.5 sm:!-mt-1 ${
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-3"
@@ -208,9 +210,9 @@ export default function HomePage() {
                       />
                     </div>
 
-                    {/* Subtitle / Mission Paragraph with Balanced Equal Gap */}
+                    {/* Subtitle / Mission Paragraph with Reduced Equal Gap */}
                     <p
-                      className={`text-stone-200 text-xs sm:text-sm md:text-base leading-relaxed max-w-3xl mx-auto font-normal drop-shadow transition-all duration-700 delay-300 ease-out !mt-3 sm:!mt-3.5 ${
+                      className={`text-stone-200 text-xs sm:text-sm md:text-base leading-relaxed max-w-3xl mx-auto font-normal drop-shadow transition-all duration-700 delay-300 ease-out !mt-1.5 sm:!mt-2 ${
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-4"
@@ -282,89 +284,6 @@ export default function HomePage() {
               />
             ))}
           </div>
-
-          {/* Organic Wave Fluid Graphics with Gold Accent Lines (Matching Reference Design) */}
-          {/* Bottom-Left Organic Wave */}
-          <div className="absolute -bottom-1 left-0 z-20 pointer-events-none w-[54%] sm:w-[50%] md:w-[46%] max-w-[660px] h-[150px] sm:h-[190px] md:h-[230px] lg:h-[265px] overflow-visible">
-            <svg
-              viewBox="0 0 700 280"
-              preserveAspectRatio="none"
-              className="w-full h-full drop-shadow-2xl animate-wave-left"
-            >
-              <defs>
-                <linearGradient id="waveGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#082b1d" stopOpacity="0.98" />
-                  <stop offset="55%" stopColor="#071f16" stopOpacity="0.95" />
-                  <stop offset="100%" stopColor="#04140e" stopOpacity="1" />
-                </linearGradient>
-                <linearGradient id="goldGradLeft" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#f59e0b" stopOpacity="1" />
-                  <stop offset="60%" stopColor="#fbbf24" stopOpacity="0.95" />
-                  <stop offset="100%" stopColor="#d97706" stopOpacity="0.15" />
-                </linearGradient>
-              </defs>
-              {/* Back ambient depth layer */}
-              <path
-                d="M0,60 C200,60 380,140 700,270 L700,280 L0,280 Z"
-                fill="#166534"
-                opacity="0.4"
-              />
-              {/* Main organic dark forest wave */}
-              <path
-                d="M0,85 C220,80 400,160 700,280 L700,280 L0,280 Z"
-                fill="url(#waveGradLeft)"
-              />
-              {/* Glowing Golden Stroke Crest */}
-              <path
-                d="M0,85 C220,80 400,160 700,280"
-                fill="none"
-                stroke="url(#goldGradLeft)"
-                strokeWidth="4.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-
-          {/* Bottom-Right Organic Wave */}
-          <div className="absolute -bottom-1 right-0 z-20 pointer-events-none w-[54%] sm:w-[50%] md:w-[46%] max-w-[660px] h-[150px] sm:h-[190px] md:h-[230px] lg:h-[265px] overflow-visible">
-            <svg
-              viewBox="0 0 700 280"
-              preserveAspectRatio="none"
-              className="w-full h-full drop-shadow-2xl animate-wave-right"
-            >
-              <defs>
-                <linearGradient id="waveGradRight" x1="100%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#082b1d" stopOpacity="0.98" />
-                  <stop offset="55%" stopColor="#071f16" stopOpacity="0.95" />
-                  <stop offset="100%" stopColor="#04140e" stopOpacity="1" />
-                </linearGradient>
-                <linearGradient id="goldGradRight" x1="100%" y1="100%" x2="0%" y2="0%">
-                  <stop offset="0%" stopColor="#f59e0b" stopOpacity="1" />
-                  <stop offset="60%" stopColor="#fbbf24" stopOpacity="0.95" />
-                  <stop offset="100%" stopColor="#d97706" stopOpacity="0.15" />
-                </linearGradient>
-              </defs>
-              {/* Back ambient depth layer */}
-              <path
-                d="M700,60 C500,60 320,140 0,270 L0,280 L700,280 Z"
-                fill="#166534"
-                opacity="0.4"
-              />
-              {/* Main organic dark forest wave */}
-              <path
-                d="M700,85 C480,80 300,160 0,280 L0,280 L700,280 Z"
-                fill="url(#waveGradRight)"
-              />
-              {/* Glowing Golden Stroke Crest */}
-              <path
-                d="M700,85 C480,80 300,160 0,280"
-                fill="none"
-                stroke="url(#goldGradRight)"
-                strokeWidth="4.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
         </div>
 
         {/* Floating Overlapping Stats Card directly matching reference screenshot */}
@@ -378,7 +297,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <span className="block font-display font-black text-2xl sm:text-3xl text-emerald-800 leading-none">
-                    107+
+                    <AnimatedCounter target={107} suffix="+" duration={1800} />
                   </span>
                   <span className="text-xs sm:text-sm text-stone-500 font-medium">
                     Health Camps Conducted
@@ -393,7 +312,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <span className="block font-display font-black text-2xl sm:text-3xl text-emerald-800 leading-none">
-                    8,500+
+                    <AnimatedCounter target={8500} suffix="+" formatComma duration={2200} />
                   </span>
                   <span className="text-xs sm:text-sm text-stone-500 font-medium">
                     Rural Patients Treated
@@ -408,7 +327,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <span className="block font-display font-black text-2xl sm:text-3xl text-[#b45309] leading-none">
-                    200 Beds
+                    <AnimatedCounter target={200} suffix=" Beds" duration={1800} />
                   </span>
                   <span className="text-xs sm:text-sm text-stone-500 font-medium">
                     Hospital Under Construction

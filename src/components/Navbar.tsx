@@ -72,11 +72,11 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 transition-all duration-300">
       {/* Top Utility Bar (Subtle, Grounded Forest - Responsive for Tablet & Desktop) */}
-      <div className="hidden md:block bg-[#143527] text-stone-200 text-[10px] lg:text-[11px] py-1.5 border-b border-[#0d2319]">
+      <div className="hidden md:block bg-[#143527] text-stone-200 text-[10px] lg:text-[10.5px] py-1 border-b border-[#0d2319]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-3 lg:space-x-5">
             <span className="flex items-center space-x-1.5 text-stone-300">
-              <MapPin size={12} className="text-amber-400 shrink-0" />
+              <MapPin size={11} className="text-amber-400 shrink-0" />
               <span className="truncate max-w-[180px] lg:max-w-none">Sugauli, East Champaran, Bihar</span>
             </span>
             <span className="text-stone-500">•</span>
@@ -84,14 +84,14 @@ export default function Navbar() {
               href="tel:+919480259311"
               className="flex items-center space-x-1.5 hover:text-white transition-colors text-stone-300 shrink-0"
             >
-              <Phone size={12} className="text-amber-400" />
+              <Phone size={11} className="text-amber-400" />
               <span>Helpline: +91 9480259311</span>
             </a>
           </div>
 
           <div className="flex items-center space-x-3 lg:space-x-4">
             <span className="flex items-center space-x-1 text-emerald-300 font-medium shrink-0">
-              <ShieldCheck size={13} />
+              <ShieldCheck size={12} />
               <span>80G Certified (Reg: 2034/2017)</span>
             </span>
             <span className="text-stone-500 hidden xl:inline">•</span>
@@ -102,11 +102,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main Navbar */}
+      {/* Main Navbar with Sleek Reduced Height */}
       <nav
         className={`w-full transition-all duration-300 ${isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-soft py-2 border-b border-[#e7e5e4]"
-            : "bg-white/95 backdrop-blur-md shadow-sm py-2.5 sm:py-3 lg:py-3.5 border-b border-[#f0eee9]"
+            ? "bg-white/95 backdrop-blur-md shadow-soft py-1 sm:py-1.5 border-b border-[#e7e5e4]"
+            : "bg-white/95 backdrop-blur-md shadow-sm py-1.5 sm:py-2 border-b border-[#f0eee9]"
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -114,29 +114,29 @@ export default function Navbar() {
             {/* Brand Identity: Emblem + Stacked Typography with Underline image */}
             <Link
               href="/"
-              className="group flex items-center space-x-2.5 sm:space-x-3 shrink-0 mr-3 sm:mr-5 lg:mr-8 xl:mr-10 py-1 transition-transform group-hover:scale-[1.01]"
+              className="group flex items-center space-x-2 sm:space-x-2.5 shrink-0 mr-3 sm:mr-4 lg:mr-7 xl:mr-9 py-0.5 transition-transform group-hover:scale-[1.01]"
             >
               {/* Emblem Icon */}
               <img
                 src="/images/logo.png"
                 alt="Dev Prabha Foundation"
-                className="h-[40px] min-[360px]:h-[44px] sm:h-[50px] md:h-[54px] lg:h-[58px] w-auto object-contain shrink-0"
+                className="h-[34px] min-[360px]:h-[38px] sm:h-[42px] md:h-[44px] lg:h-[46px] w-auto object-contain shrink-0"
               />
 
               {/* Brand Wordmark (Stacked Two-Line Typography with Underline Image Below Foundation) */}
               <div className="flex flex-col justify-center leading-none select-none text-left">
-                <span className="font-display font-black text-[16px] min-[360px]:text-[17px] sm:text-[19px] md:text-[21px] lg:text-[23px] tracking-tight text-[#b45309] leading-none">
+                <span className="font-display font-black text-[15px] min-[360px]:text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] tracking-tight text-[#b45309] leading-none">
                   DevPrabha
                 </span>
                 <div className="relative inline-block mt-0.5">
-                  <span className="font-display font-black text-[14px] min-[360px]:text-[15px] sm:text-[17px] md:text-[19px] lg:text-[20px] tracking-tight text-[#163352] leading-none block">
+                  <span className="font-display font-black text-[13px] min-[360px]:text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] tracking-tight text-[#163352] leading-none block">
                     Foundation
                   </span>
                   {/* Underline Image below title */}
                   <img
                     src="/images/underline.png"
                     alt=""
-                    className="w-full h-auto max-h-[7px] sm:max-h-[8px] md:max-h-[9px] object-contain select-none pointer-events-none mt-0.5"
+                    className="w-full h-auto max-h-[6px] sm:max-h-[7px] object-contain select-none pointer-events-none mt-0.5"
                   />
                 </div>
               </div>
@@ -150,7 +150,7 @@ export default function Navbar() {
                   <Link
                     key={link.path}
                     href={link.path}
-                    className={`px-2 xl:px-3 py-1.5 xl:py-2 rounded-xl text-[11px] xl:text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap ${isActive
+                    className={`px-2 xl:px-2.5 py-1 xl:py-1.5 rounded-lg text-[11px] xl:text-[11.5px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${isActive
                         ? "bg-[#1b4332] text-white shadow-soft"
                         : "text-stone-700 hover:text-[#1b4332] hover:bg-[#f5f2eb]"
                       }`}
@@ -165,9 +165,9 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center space-x-3 shrink-0">
               <Link
                 href="/donate"
-                className="px-4 xl:px-5 py-2 xl:py-2.5 rounded-full bg-[#b45309] hover:bg-[#92400e] text-white font-bold text-[11px] xl:text-xs uppercase tracking-wider shadow-soft hover:shadow-soft-lg active:scale-95 transition-all flex items-center space-x-1.5"
+                className="px-3.5 xl:px-4 py-1.5 xl:py-2 rounded-full bg-[#b45309] hover:bg-[#92400e] text-white font-bold text-[10.5px] xl:text-[11.5px] uppercase tracking-wider shadow-soft hover:shadow-soft-lg active:scale-95 transition-all flex items-center space-x-1.5"
               >
-                <Heart size={14} className="fill-white" />
+                <Heart size={13} className="fill-white" />
                 <span>Donate Direct</span>
               </Link>
             </div>
