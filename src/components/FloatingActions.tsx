@@ -3,7 +3,7 @@
 import { MessageCircle, PhoneCall } from "lucide-react";
 
 export default function FloatingActions() {
-  const whatsappUrl = "https://wa.me/918882079079?text=Hello%20Dev%20Prabha%20Foundation,%20I%20would%20like%20to%20know%20more%20about%20your%20welfare%20activities.";
+  const whatsappUrl = "https://wa.me/919480259311?text=Hello%20Dev%20Prabha%20Foundation,%20I%20would%20like%20to%20know%20more%20about%20your%20welfare%20activities.";
 
   return (
     <div
@@ -28,7 +28,7 @@ export default function FloatingActions() {
       {/* Calling Floating Button */}
       <a
         id="floating-calling-btn"
-        href="tel:+918882079079"
+        href="tel:+919480259311"
         className="w-14 h-14 bg-[#b45309] hover:bg-[#92400e] hover:scale-110 active:scale-95 text-white rounded-full flex items-center justify-center shadow-soft-lg transition-all duration-300 animate-float group"
         style={{ animationDelay: "1s" }}
         title="Call Us Now"

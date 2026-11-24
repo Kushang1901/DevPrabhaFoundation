@@ -98,3 +98,64 @@
   }
 }
 
+/* Google Translate Custom Integration - Hide Default Banner & Frames Completely */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+iframe.goog-te-banner-frame.skiptranslate,
+iframe[id*=":1.container"],
+iframe[id*=":2.container"],
+iframe[name*="goog-te-banner-frame"],
+iframe[id*="goog-te-banner-frame"],
+.skiptranslate iframe {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0px !important;
+  width: 0px !important;
+  max-height: 0px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+html {
+  top: 0px !important;
+}
+
+body {
+  top: 0px !important;
+  position: static !important;
+  margin-top: 0px !important;
+}
+
+#google_translate_element,
+.goog-te-gadget,
+.goog-te-gadget-simple {
+  display: none !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+/* Ensure font rendering stays crisp in all translated Indian scripts */
+[lang] {
+  text-rendering: optimizeLegibility;
+}
+

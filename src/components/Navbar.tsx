@@ -19,6 +19,7 @@ import {
   PhoneCall,
   ChevronRight,
 } from "lucide-react";
+import LanguageSelector from "@/components/LanguageSelector";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,25 +112,27 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
-            {/* Brand Identity: Emblem + Stacked Typography with Underline image */}
+            {/* Brand Identity: Emblem + Stacked Typography with Underline image (notranslate to preserve brand in all languages) */}
             <Link
               href="/"
-              className="group flex items-center space-x-2 sm:space-x-2.5 shrink-0 mr-3 sm:mr-4 lg:mr-7 xl:mr-9 py-0.5 transition-transform group-hover:scale-[1.01]"
+              className="group flex items-center space-x-2 sm:space-x-2.5 shrink-0 mr-3 sm:mr-4 lg:mr-7 xl:mr-9 py-0.5 transition-transform group-hover:scale-[1.01] notranslate"
+              translate="no"
             >
               {/* Emblem Icon */}
               <img
                 src="/images/logo.png"
                 alt="Dev Prabha Foundation"
-                className="h-[34px] min-[360px]:h-[38px] sm:h-[42px] md:h-[44px] lg:h-[46px] w-auto object-contain shrink-0"
+                className="h-[34px] min-[360px]:h-[38px] sm:h-[42px] md:h-[44px] lg:h-[46px] w-auto object-contain shrink-0 notranslate"
+                translate="no"
               />
 
               {/* Brand Wordmark (Stacked Two-Line Typography with Underline Image Below Foundation) */}
-              <div className="flex flex-col justify-center leading-none select-none text-left">
-                <span className="font-display font-black text-[15px] min-[360px]:text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] tracking-tight text-[#b45309] leading-none">
+              <div className="flex flex-col justify-center leading-none select-none text-left notranslate" translate="no">
+                <span className="font-display font-black text-[15px] min-[360px]:text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] tracking-tight text-[#b45309] leading-none notranslate" translate="no">
                   DevPrabha
                 </span>
-                <div className="relative inline-block mt-0.5">
-                  <span className="font-display font-black text-[13px] min-[360px]:text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] tracking-tight text-[#163352] leading-none block">
+                <div className="relative inline-block mt-0.5 notranslate" translate="no">
+                  <span className="font-display font-black text-[13px] min-[360px]:text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] tracking-tight text-[#163352] leading-none block notranslate" translate="no">
                     Foundation
                   </span>
                   {/* Underline Image below title */}
@@ -161,8 +164,9 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Desktop Right Action: Warm Amber Harvest CTA */}
-            <div className="hidden lg:flex items-center space-x-3 shrink-0">
+            {/* Desktop Right Action: Language Selector + Warm Amber Harvest CTA */}
+            <div className="hidden lg:flex items-center space-x-2.5 shrink-0">
+              <LanguageSelector variant="navbar" />
               <Link
                 href="/donate"
                 className="px-3.5 xl:px-4 py-1.5 xl:py-2 rounded-full bg-[#b45309] hover:bg-[#92400e] text-white font-bold text-[10.5px] xl:text-[11.5px] uppercase tracking-wider shadow-soft hover:shadow-soft-lg active:scale-95 transition-all flex items-center space-x-1.5"
@@ -174,6 +178,7 @@ export default function Navbar() {
 
             {/* Mobile & Tablet Controls: Fully responsive, never pushes Hamburger off-screen */}
             <div className="lg:hidden flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+              <LanguageSelector variant="navbar" />
               <Link
                 href="/donate"
                 className="px-2.5 sm:px-3 py-1.5 bg-[#b45309] hover:bg-[#92400e] text-white rounded-full flex items-center space-x-1 shadow-soft text-[11px] sm:text-xs font-bold uppercase tracking-wider shrink-0 transition-transform active:scale-95"
@@ -215,18 +220,19 @@ export default function Navbar() {
       >
         {/* Drawer Header */}
         <div className="p-4 sm:p-5 border-b border-stone-200 flex items-center justify-between bg-white">
-          <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-2.5">
+          <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-2.5 notranslate" translate="no">
             <img
               src="/images/logo.png"
               alt="Dev Prabha Foundation"
-              className="h-9 sm:h-10 w-auto object-contain shrink-0"
+              className="h-9 sm:h-10 w-auto object-contain shrink-0 notranslate"
+              translate="no"
             />
-            <div className="flex flex-col justify-center leading-none select-none text-left">
-              <span className="font-display font-black text-base tracking-tight text-[#b45309] leading-none">
+            <div className="flex flex-col justify-center leading-none select-none text-left notranslate" translate="no">
+              <span className="font-display font-black text-base tracking-tight text-[#b45309] leading-none notranslate" translate="no">
                 DevPrabha
               </span>
-              <div className="relative inline-block mt-0.5">
-                <span className="font-display font-black text-sm tracking-tight text-[#163352] leading-none block">
+              <div className="relative inline-block mt-0.5 notranslate" translate="no">
+                <span className="font-display font-black text-sm tracking-tight text-[#163352] leading-none block notranslate" translate="no">
                   Foundation
                 </span>
                 <img
@@ -245,6 +251,11 @@ export default function Navbar() {
           >
             <X size={20} />
           </button>
+        </div>
+
+        {/* Language Selection in Drawer */}
+        <div className="px-4 py-3 bg-stone-50/90 border-b border-stone-200/80">
+          <LanguageSelector variant="drawer" />
         </div>
 
         {/* Drawer Navigation Links */}

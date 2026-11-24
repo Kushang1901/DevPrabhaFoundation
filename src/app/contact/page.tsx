@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { MapPin, Phone, Mail, CheckCircle, AlertCircle } from "lucide-react";
 import confetti from "canvas-confetti";
+import EmbeddedMap from "@/components/EmbeddedMap";
 
 export default function ContactPage() {
   const [contactForm, setContactForm] = useState({
@@ -113,7 +114,7 @@ export default function ContactPage() {
                     Helpline Calling
                   </span>
                   <strong className="text-stone-800 text-sm block">
-                    +91 9480259311 / +91 8882079079
+                    +91 9480259311
                   </strong>
                 </div>
               </div>
@@ -127,7 +128,7 @@ export default function ContactPage() {
                     Email Correspondence
                   </span>
                   <strong className="text-stone-800 text-sm font-mono block">
-                    contact@dpf.org.in
+                    kb_tiwary@yahoo.co.in
                   </strong>
                 </div>
               </div>
@@ -246,6 +247,26 @@ export default function ContactPage() {
               </button>
             </form>
           </div>
+        </div>
+
+        {/* ========================================================
+            FOUNDATION INTERACTIVE GOOGLE MAP
+        ======================================================== */}
+        <div className="mt-12 sm:mt-16 pt-8 border-t border-stone-200/80">
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-bold uppercase tracking-wider mb-2 border border-emerald-100">
+              <MapPin size={12} className="text-emerald-700" />
+              <span>Foundation Location</span>
+            </div>
+            <h2 className="font-display font-black text-2xl sm:text-3xl text-stone-900 tracking-tight">
+              Locate Our Foundation on Maps
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-500 mt-1">
+              Registered Headquarters & Hospital Site at Bangra, Sugauli, East Champaran, Bihar.
+            </p>
+          </div>
+
+          <EmbeddedMap />
         </div>
       </div>
     </div>

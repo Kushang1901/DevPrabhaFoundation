@@ -479,8 +479,8 @@ export const TRUST_DETAILS: TrustLegalDetails = {
   section12A: "CIT/FBD/Tech/12A/2014-15/1503 dated 02/06/2014",
   section80G: "CIT(E)/Pat/12AA/04(341)/2018-19/616-20 dated 19/04/2018",
   registeredOffice: "Bangra, Sugauli, East Champaran, Bihar - 845456, India",
-  contactPhone: "+91 9480259311 / +91 8882079079",
-  contactEmail: "contact@dpf.org.in",
+  contactPhone: "+91 9480259311",
+  contactEmail: "kb_tiwary@yahoo.co.in",
   website: "https://dpf.org.in",
 };
 

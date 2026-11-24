@@ -83,7 +83,7 @@ export async function POST(req: Request) {
             </p>
 
             <div style="margin-top: 25px; border-top: 1px solid #e7e5e4; padding-top: 15px; text-align: center; font-size: 11px; color: #a8a29e;">
-              Dev Prabha Foundation • Sugauli, East Champaran, Bihar - 845456 • contact@dpf.org.in • +91 9480259311
+              Dev Prabha Foundation • Sugauli, East Champaran, Bihar - 845456 • kb_tiwary@yahoo.co.in • +91 9480259311
             </div>
           </div>
         `,

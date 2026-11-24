@@ -12,6 +12,15 @@ import {
   Users,
   BedDouble,
   Leaf,
+  BookOpen,
+  GraduationCap,
+  HeartPulse,
+  Eye,
+  Building2,
+  HeartHandshake,
+  ShieldCheck,
+  Scissors,
+  Sprout,
 } from "lucide-react";
 
 // Components
@@ -35,54 +44,180 @@ export default function HomePage() {
 
   const heroSlides = [
     {
-      image: "/images/Aboutus.jpeg",
-      tag: "REG. PUBLIC CHARITABLE TRUST • 80G CERTIFIED",
-      headlineLine1: "Transforming Lives Through",
-      headlineHighlight: "Healthcare, Education & Social Dignity",
+      image: "/images/slider1.jpg",
+
+      desktopHeadline: (
+        <>
+          Igniting Young Minds<br />
+          Through <span className="text-[#f59e0b]">Quality</span><br />
+          Education & Retention Hubs
+        </>
+      ),
+      mobileHeadline: (
+        <>
+          Igniting Young Minds<br />
+          Through <span className="text-[#f59e0b]">Quality</span><br />
+          Education & Retention Hubs
+        </>
+      ),
       description:
-        "Dev Prabha Foundation (DPF) is actively constructing a 200-bed Multispecialty Hospital in Sugauli, Bihar, bringing high-quality medical facilities, girl-child retention schools, and women self-help empowerment to underprivileged families.",
-      primaryCtaText: "DONATE DIRECT (80G TAX EXEMPT)",
+        "Supplying textbooks, smart educational modules, school retention scholarships, and village study centers to eliminate rural drop-out rates.",
+      features: [
+        { icon: "BookOpen", line1: "Education", line2: "Support" },
+        { icon: "GraduationCap", line1: "Student", line2: "Retention" },
+        { icon: "Users", line1: "Rural Study", line2: "Centers" },
+      ],
+      primaryCtaText: "SPONSOR A CHILD'S EDUCATION",
       primaryCtaLink: "/donate",
-      secondaryCtaText: "OUR 200-BED HOSPITAL",
-      secondaryCtaLink: "/projects",
+      secondaryCtaText: "VIEW IMPACT GALLERY",
+      secondaryCtaLink: "/gallery",
     },
     {
       image: "/images/medicalcamp.jpg",
-      tag: "PREVENTIVE RURAL HEALTHCARE • FREE MEDICINES",
-      headlineLine1: "Delivering Free Healthcare to",
-      headlineHighlight: "Bihar's Most Underserved Remote Villages",
+
+      desktopHeadline: (
+        <>
+          Delivering Free Healthcare<br />
+          to <span className="text-[#f59e0b]">Bihar's Most</span><br />
+          Underserved Remote Villages
+        </>
+      ),
+      mobileHeadline: (
+        <>
+          Delivering Free Healthcare to<br />
+          <span className="text-[#f59e0b]">Bihar's Most Underserved</span><br />
+          Remote Villages
+        </>
+      ),
       description:
         "Conducting diagnosis, pediatric screenings, distributing free medicines and eyeglasses across remote rural blocks in East Champaran and adjoining districts.",
+      features: [
+        { icon: "Stethoscope", line1: "Free Medical", line2: "Checkups" },
+        { icon: "HeartPulse", line1: "Essential", line2: "Medicines" },
+        { icon: "Eye", line1: "Vision &", line2: "Eyeglasses" },
+      ],
       primaryCtaText: "SUPPORT MEDICAL CAMPS",
       primaryCtaLink: "/donate",
       secondaryCtaText: "EXPLORE HEALTH INITIATIVES",
       secondaryCtaLink: "/activities",
     },
     {
+      image: "/images/Aboutus.jpeg",
+      tag: "200-Bed Hospital Project • Sugauli, Bihar",
+      desktopHeadline: (
+        <>
+          Constructing A Modern<br />
+          <span className="text-[#f59e0b]">200-Bed Multispecialty</span><br />
+          Hospital in Champaran
+        </>
+      ),
+      mobileHeadline: (
+        <>
+          Constructing A Modern<br />
+          <span className="text-[#f59e0b]">200-Bed Multispecialty</span><br />
+          Hospital in Champaran
+        </>
+      ),
+      description:
+        "Bringing high-grade ICU, emergency care, maternity wings, and affordable surgery to millions of underprivileged families in North Bihar.",
+      features: [
+        { icon: "Building2", line1: "200-Bed", line2: "Hospital" },
+        { icon: "HeartHandshake", line1: "Specialist", line2: "Care" },
+        { icon: "ShieldCheck", line1: "80G Tax", line2: "Exempt" },
+      ],
+      primaryCtaText: "DONATE TO HOSPITAL FUND",
+      primaryCtaLink: "/donate",
+      secondaryCtaText: "OUR 200-BED HOSPITAL",
+      secondaryCtaLink: "/projects",
+    },
+    {
       image: "/images/slider3.png",
-      tag: "WOMEN EMPOWERMENT • VOCATIONAL SKILLING",
-      headlineLine1: "Fostering Self-Reliance Through",
-      headlineHighlight: "Women Skilling & Micro-Enterprises",
+
+      desktopHeadline: (
+        <>
+          Fostering Self-Reliance<br />
+          Through <span className="text-[#f59e0b]">Women Skilling</span><br />
+          & Micro-Enterprises
+        </>
+      ),
+      mobileHeadline: (
+        <>
+          Fostering Self-Reliance<br />
+          Through <span className="text-[#f59e0b]">Women Skilling</span><br />
+          & Micro-Enterprises
+        </>
+      ),
       description:
         "Empowering rural women with vocational tailoring, organic composting training, and financial self-reliance through active Self-Help Groups (SHGs).",
+      features: [
+        { icon: "Scissors", line1: "Vocational", line2: "Tailoring" },
+        { icon: "Sprout", line1: "Organic", line2: "Composting" },
+        { icon: "Users", line1: "Active SHG", line2: "Networks" },
+      ],
       primaryCtaText: "SPONSOR WOMEN LIVELIHOOD",
       primaryCtaLink: "/donate",
       secondaryCtaText: "OUR WELFARE ACTIVITIES",
       secondaryCtaLink: "/activities",
     },
     {
-      image: "/images/slider1.jpg",
-      tag: "CHILD RETENTION • VILLAGE LIBRARIES",
-      headlineLine1: "Igniting Young Minds Through",
-      headlineHighlight: "Quality Education & Retention Hubs",
+      image: "/images/Aboutus.jpeg",
+
+      desktopHeadline: (
+        <>
+          Transforming Lives Through<br />
+          <span className="text-[#f59e0b]">Healthcare, Education</span><br />
+          & Social Dignity
+        </>
+      ),
+      mobileHeadline: (
+        <>
+          Transforming Lives Through<br />
+          <span className="text-[#f59e0b]">Healthcare, Education</span><br />
+          & Social Dignity
+        </>
+      ),
       description:
-        "Supplying textbooks, smart educational modules, school retention scholarships, and village study centers to eliminate rural drop-out rates.",
-      primaryCtaText: "SPONSOR A CHILD'S EDUCATION",
+        "Dev Prabha Foundation (DPF) is actively constructing a 200-bed Multispecialty Hospital in Sugauli, Bihar, bringing high-quality medical facilities and girl-child retention schools to underprivileged families.",
+      features: [
+        { icon: "Users", line1: "Grassroots", line2: "Movement" },
+        { icon: "Heart", line1: "100% Direct", line2: "Impact" },
+        { icon: "ShieldCheck", line1: "Section 80G", line2: "Exempt" },
+      ],
+      primaryCtaText: "DONATE DIRECT (80G TAX EXEMPT)",
       primaryCtaLink: "/donate",
-      secondaryCtaText: "VIEW IMPACT GALLERY",
-      secondaryCtaLink: "/gallery",
+      secondaryCtaText: "OUR CORE VALUES",
+      secondaryCtaLink: "/about",
     },
   ];
+
+  const renderFeatureIcon = (name: string) => {
+    switch (name) {
+      case "BookOpen":
+        return <BookOpen size={24} className="text-amber-400 shrink-0" />;
+      case "GraduationCap":
+        return <GraduationCap size={24} className="text-emerald-400 shrink-0" />;
+      case "Users":
+        return <Users size={24} className="text-amber-400 shrink-0" />;
+      case "Stethoscope":
+        return <Stethoscope size={24} className="text-amber-400 shrink-0" />;
+      case "HeartPulse":
+        return <HeartPulse size={24} className="text-amber-400 shrink-0" />;
+      case "Eye":
+        return <Eye size={24} className="text-amber-400 shrink-0" />;
+      case "Building2":
+        return <Building2 size={24} className="text-amber-400 shrink-0" />;
+      case "HeartHandshake":
+        return <HeartHandshake size={24} className="text-amber-400 shrink-0" />;
+      case "ShieldCheck":
+        return <ShieldCheck size={24} className="text-amber-400 shrink-0" />;
+      case "Scissors":
+        return <Scissors size={24} className="text-amber-400 shrink-0" />;
+      case "Sprout":
+        return <Sprout size={24} className="text-amber-400 shrink-0" />;
+      default:
+        return <Leaf size={24} className="text-amber-400 shrink-0" />;
+    }
+  };
 
   // Smooth auto-slide every 5 seconds
   useEffect(() => {
@@ -119,8 +254,8 @@ export default function HomePage() {
   return (
     <div id="home-page-container" className="space-y-16 sm:space-y-24">
       {/* ========================================================
-          1. FULL-WIDTH HERO SECTION: DYNAMIC CINEMATIC SLIDER
-          (Background Image & Hero Content Translate Smoothly Together)
+          1. FULL-WIDTH HERO SECTION: ASYMMETRIC CINEMATIC SLIDER
+          (Matching Provided Desktop & Mobile Reference Mockups)
       ======================================================== */}
       <section className="relative w-full overflow-hidden">
         <div
@@ -143,106 +278,156 @@ export default function HomePage() {
               return (
                 <div
                   key={idx}
-                  className="w-full shrink-0 relative flex flex-col justify-center items-center text-center px-4 sm:px-6 lg:px-12 pt-12 sm:pt-14 lg:pt-16 pb-20 sm:pb-24 lg:pb-26 min-h-[560px] sm:min-h-[600px] lg:min-h-[630px]"
+                  className="w-full shrink-0 relative flex flex-col justify-center min-h-[calc(100vh-64px)] min-h-[calc(100svh-64px)] min-h-[calc(100dvh-64px)] sm:min-h-[calc(100dvh-82px)] lg:min-h-[660px]"
                 >
-                  {/* Full-bleed background image with subtle live motion */}
+                  {/* Full-bleed background image with responsive focal positioning */}
                   <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     <img
                       src={slide.image}
-                      alt={slide.headlineHighlight}
-                      className={`w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${
-                        isActive ? "scale-105" : "scale-100"
-                      }`}
+                      alt="Dev Prabha Foundation"
+                      className={`w-full h-full object-cover object-[center_12%] sm:object-center lg:object-[82%_center] transition-transform duration-[7000ms] ease-out ${isActive ? "scale-105" : "scale-100"
+                        }`}
                     />
-                    {/* Rich Dark Forest Teal Gradient Overlay matching reference screenshot */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#071f16]/95 via-[#0e3325]/85 to-[#071f16]/95" />
-                    <div className="absolute inset-0 bg-black/20" />
+                    {/* Desktop Gradient: Rich Dark Forest Green on left, clear on right to reveal children */}
+                    <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-[#051c13]/98 via-[#062419]/88 via-48% to-[#051c13]/15" />
+
+                    {/* Mobile Gradient: Balanced green tint so children background image is visible while centered text remains crisp */}
+                    <div className="lg:hidden absolute inset-0 bg-gradient-to-b from-[#051c13]/60 via-[#062419]/55 to-[#04160f]/75" />
                   </div>
 
-                  {/* Centered Hero Content with Silky Smooth Cascade Transition */}
-                  <div
-                    className={`relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center space-y-5 sm:space-y-6 transition-all duration-700 ease-out ${
-                      isActive
-                        ? "opacity-100 translate-y-0 scale-100"
-                        : "opacity-0 translate-y-5 scale-[0.98] pointer-events-none"
-                    }`}
-                  >
+                  {/* ==================== DESKTOP CONTENT (Left-Aligned Split Layout) ==================== */}
+                  <div className="hidden lg:block relative z-10 max-w-7xl w-full mx-auto px-6 lg:px-8 pt-14 pb-18 xl:pt-16 xl:pb-20 -translate-y-1.5 xl:-translate-y-2">
+                    <div className="max-w-2xl text-left space-y-4 xl:space-y-5">
+
+
+                      {/* Main Headline */}
+                      <h1
+                        className={`font-display font-black text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] text-white tracking-tight leading-[1.14] drop-shadow-md transition-all duration-700 delay-200 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                          }`}
+                      >
+                        {slide.desktopHeadline}
+                      </h1>
+
+                      {/* Golden Curved Decorative Underline (Desktop: Left-Aligned under Headline) */}
+                      <div
+                        className={`transition-all duration-700 delay-250 ease-out py-0.5 ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+                          }`}
+                      >
+                        <img
+                          src="/images/underline.png"
+                          alt=""
+                          className="w-44 sm:w-52 h-auto object-contain select-none pointer-events-none drop-shadow"
+                        />
+                      </div>
+
+                      {/* Description */}
+                      <p
+                        className={`text-stone-200 text-sm lg:text-[15px] leading-relaxed max-w-xl font-normal drop-shadow transition-all duration-700 delay-300 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                          }`}
+                      >
+                        {slide.description}
+                      </p>
+
+                      {/* Feature Icons Row (Desktop Only) */}
+                      <div
+                        className={`flex items-center space-x-6 xl:space-x-8 pt-1.5 transition-all duration-700 delay-350 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                          }`}
+                      >
+                        {slide.features.map((feat, fIdx) => (
+                          <div key={fIdx} className="flex items-center space-x-2.5">
+                            <div className="shrink-0">{renderFeatureIcon(feat.icon)}</div>
+                            <div className="text-left text-xs font-semibold text-stone-200 leading-tight">
+                              <span>{feat.line1}</span>
+                              <span className="block text-stone-300">{feat.line2}</span>
+                            </div>
+                            {fIdx < slide.features.length - 1 && (
+                              <div className="h-7 w-[1px] bg-white/20 ml-6 hidden xl:block" />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* CTA Buttons */}
+                      <div
+                        className={`flex items-center gap-4 pt-2.5 transition-all duration-700 delay-400 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                          }`}
+                      >
+                        <Link
+                          href={slide.primaryCtaLink}
+                          className="inline-flex items-center justify-center space-x-2 bg-[#b45309] hover:bg-[#92400e] text-white font-bold px-7 py-3.5 rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 text-xs uppercase tracking-wider"
+                        >
+                          <Heart size={14} className="fill-white" />
+                          <span>{slide.primaryCtaText}</span>
+                        </Link>
+                        <Link
+                          href={slide.secondaryCtaLink}
+                          className="inline-flex items-center justify-center space-x-2 border border-white/60 hover:bg-white/10 text-white font-bold px-7 py-3.5 rounded-full backdrop-blur-sm transition-all hover:scale-105 active:scale-95 text-xs uppercase tracking-wider"
+                        >
+                          <span>{slide.secondaryCtaText}</span>
+                          <ArrowRight size={14} className="text-white" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ==================== MOBILE CONTENT (Centered Full-Cover Hero Stack) ==================== */}
+                  <div className="lg:hidden relative z-10 w-full flex-1 flex flex-col justify-center items-center text-center px-4 sm:px-6 py-10 sm:py-14 pb-14 sm:pb-18 space-y-3.5 sm:space-y-4 my-auto">
                     {/* Trust Pill Badge */}
                     <div
-                      className={`inline-flex items-center space-x-2 bg-black/35 backdrop-blur-md border border-white/25 px-3.5 sm:px-4 py-1.5 rounded-full shadow-sm transition-all duration-700 delay-100 ease-out ${
-                        isActive
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 -translate-y-2"
-                      }`}
+                      className={`inline-flex items-center space-x-1.5 bg-black/40 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full shadow-sm transition-all duration-700 delay-100 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+                        }`}
                     >
-                      <Leaf size={14} className="text-emerald-400 fill-emerald-400 shrink-0" />
-                      <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-emerald-300">
+                      <Leaf size={12} className="text-emerald-400 fill-emerald-400 shrink-0" />
+                      <span className="text-[10px] sm:text-[11px] font-bold text-white tracking-wide">
                         {slide.tag}
                       </span>
                     </div>
 
-                    {/* Main Headline with Warm Gold Highlight */}
+                    {/* Main Headline */}
                     <h1
-                      className={`font-display font-black text-2xl sm:text-4xl md:text-5xl lg:text-[50px] text-white tracking-tight leading-[1.16] drop-shadow-md transition-all duration-700 delay-200 ease-out ${
-                        isActive
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-4"
-                      }`}
+                      className={`font-display font-black text-2xl sm:text-3xl md:text-4xl text-white tracking-tight leading-[1.2] drop-shadow-md transition-all duration-700 delay-200 ease-out px-1 max-w-sm sm:max-w-md`}
                     >
-                      <span>{slide.headlineLine1}</span>{" "}
-                      <span className="text-[#f59e0b]">
-                        {slide.headlineHighlight}
-                      </span>
+                      {slide.mobileHeadline}
                     </h1>
 
-                    {/* Centered Golden Decorative Underline Image Between Hero Title and Sub-content (Tight Balanced Spacing) */}
+                    {/* Golden Curved Decorative Underline */}
                     <div
-                      className={`transition-all duration-700 delay-250 ease-out !-mt-0.5 sm:!-mt-1 ${
-                        isActive
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-3"
-                      }`}
+                      className={`transition-all duration-700 delay-250 ease-out py-0.5 ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+                        }`}
                     >
                       <img
                         src="/images/underline.png"
                         alt=""
-                        className="w-32 sm:w-44 md:w-56 lg:w-64 h-auto mx-auto object-contain select-none pointer-events-none drop-shadow-sm"
+                        className="w-32 sm:w-40 h-auto mx-auto object-contain select-none pointer-events-none drop-shadow"
                       />
                     </div>
 
-                    {/* Subtitle / Mission Paragraph with Reduced Equal Gap */}
+                    {/* Subtitle / Description */}
                     <p
-                      className={`text-stone-200 text-xs sm:text-sm md:text-base leading-relaxed max-w-3xl mx-auto font-normal drop-shadow transition-all duration-700 delay-300 ease-out !mt-1.5 sm:!mt-2 ${
-                        isActive
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-4"
-                      }`}
+                      className={`text-stone-100 text-xs sm:text-[13px] leading-relaxed max-w-sm sm:max-w-md font-normal drop-shadow-md transition-all duration-700 delay-300 ease-out px-2 ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                        }`}
                     >
                       {slide.description}
                     </p>
 
-                    {/* Call-to-Action Buttons */}
+                    {/* CTA Buttons (Stacked Full-Width on Mobile) */}
                     <div
-                      className={`flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-1 w-full sm:w-auto transition-all duration-700 delay-400 ease-out ${
-                        isActive
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-4"
-                      }`}
+                      className={`flex flex-col w-full max-w-xs sm:max-w-sm gap-2.5 pt-1.5 transition-all duration-700 delay-400 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                        }`}
                     >
                       <Link
                         href={slide.primaryCtaLink}
-                        className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#b45309] hover:bg-[#92400e] text-white font-bold px-7 py-3.5 rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95 text-xs sm:text-sm uppercase tracking-wider"
+                        className="w-full inline-flex items-center justify-center space-x-2 bg-[#b45309] hover:bg-[#92400e] text-white font-bold py-3 px-5 rounded-full shadow-md text-xs uppercase tracking-wider active:scale-95 transition-transform"
                       >
-                        <Heart size={16} className="fill-white" />
+                        <Heart size={14} className="fill-white" />
                         <span>{slide.primaryCtaText}</span>
                       </Link>
-
                       <Link
                         href={slide.secondaryCtaLink}
-                        className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-black/30 hover:bg-white/15 text-white border border-white/70 font-bold px-7 py-3.5 rounded-2xl shadow-lg backdrop-blur-sm transition-all hover:scale-105 active:scale-95 text-xs sm:text-sm uppercase tracking-wider"
+                        className="w-full inline-flex items-center justify-center space-x-2 border border-white/60 bg-black/30 hover:bg-black/50 text-white font-bold py-3 px-5 rounded-full backdrop-blur-sm text-xs uppercase tracking-wider active:scale-95 transition-transform"
                       >
                         <span>{slide.secondaryCtaText}</span>
-                        <ArrowRight size={16} className="text-white" />
+                        <ArrowRight size={14} className="text-white" />
                       </Link>
                     </div>
                   </div>
@@ -270,30 +455,94 @@ export default function HomePage() {
           </button>
 
           {/* Indicator Dots */}
-          <div className="absolute bottom-14 sm:bottom-16 inset-x-0 flex justify-center items-center space-x-2.5 z-20">
+          <div className="absolute bottom-4 sm:bottom-8 lg:bottom-12 inset-x-0 flex justify-center items-center space-x-2 z-20">
             {heroSlides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setSliderIndex(i)}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
-                  sliderIndex === i
-                    ? "w-8 bg-[#f59e0b] shadow-sm"
-                    : "w-2.5 bg-white/50 hover:bg-white/80"
-                }`}
+                className={`h-2.5 rounded-full transition-all duration-300 ${sliderIndex === i
+                  ? "w-7 bg-[#f59e0b] shadow-sm"
+                  : "w-2.5 bg-white/50 hover:bg-white/80"
+                  }`}
                 aria-label={`Slide ${i + 1}`}
               />
             ))}
           </div>
+
+          {/* Subtle Organic Forest Green Waves Framing Bottom (Matching Reference Images) */}
+          <div className="absolute -bottom-1 left-0 z-10 pointer-events-none w-[52%] sm:w-[48%] md:w-[44%] max-w-[580px] h-[95px] sm:h-[135px] md:h-[175px] lg:h-[200px] overflow-visible">
+            <svg
+              viewBox="0 0 700 240"
+              preserveAspectRatio="none"
+              className="w-full h-full drop-shadow-xl"
+            >
+              <defs>
+                <linearGradient id="waveGradLeftGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#082b1d" stopOpacity="0.98" />
+                  <stop offset="55%" stopColor="#051c13" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="#02100a" stopOpacity="1" />
+                </linearGradient>
+                <linearGradient id="crestGradLeftGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#86efac" stopOpacity="1" />
+                  <stop offset="60%" stopColor="#4ade80" stopOpacity="0.85" />
+                  <stop offset="100%" stopColor="#15803d" stopOpacity="0.1" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,90 C220,110 440,170 700,230 L700,240 L0,240 Z"
+                fill="url(#waveGradLeftGreen)"
+              />
+              <path
+                d="M0,90 C220,110 440,170 700,230"
+                fill="none"
+                stroke="url(#crestGradLeftGreen)"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+
+          <div className="absolute -bottom-1 right-0 z-10 pointer-events-none w-[52%] sm:w-[48%] md:w-[44%] max-w-[580px] h-[95px] sm:h-[135px] md:h-[175px] lg:h-[200px] overflow-visible">
+            <svg
+              viewBox="0 0 700 240"
+              preserveAspectRatio="none"
+              className="w-full h-full drop-shadow-xl"
+            >
+              <defs>
+                <linearGradient id="waveGradRightGreen" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#082b1d" stopOpacity="0.98" />
+                  <stop offset="55%" stopColor="#051c13" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="#02100a" stopOpacity="1" />
+                </linearGradient>
+                <linearGradient id="crestGradRightGreen" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#86efac" stopOpacity="1" />
+                  <stop offset="60%" stopColor="#4ade80" stopOpacity="0.85" />
+                  <stop offset="100%" stopColor="#15803d" stopOpacity="0.1" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M700,90 C480,110 260,170 0,230 L0,240 L700,240 Z"
+                fill="url(#waveGradRightGreen)"
+              />
+              <path
+                d="M700,90 C480,110 260,170 0,230"
+                fill="none"
+                stroke="url(#crestGradRightGreen)"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
         </div>
 
         {/* Floating Overlapping Stats Card directly matching reference screenshot */}
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-30 -mt-10 sm:-mt-14">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-30 -mt-6 sm:-mt-12 lg:-mt-14">
           <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-stone-200/90 py-5 sm:py-6 px-6 sm:px-10">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-stone-200">
               {/* Stat 1: 107+ Health Camps */}
               <div className="flex items-center space-x-4 justify-center sm:justify-start pt-2 sm:pt-0 sm:pr-4">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100 shadow-xs">
-                  <Stethoscope size={24} className="text-emerald-700" />
+                  <Users size={24} className="text-emerald-700" />
                 </div>
                 <div>
                   <span className="block font-display font-black text-2xl sm:text-3xl text-emerald-800 leading-none">
@@ -308,7 +557,7 @@ export default function HomePage() {
               {/* Stat 2: 8,500+ Rural Patients */}
               <div className="flex items-center space-x-4 justify-center sm:justify-start pt-4 sm:pt-0 sm:px-4">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100 shadow-xs">
-                  <Users size={24} className="text-emerald-700" />
+                  <Stethoscope size={24} className="text-emerald-700" />
                 </div>
                 <div>
                   <span className="block font-display font-black text-2xl sm:text-3xl text-emerald-800 leading-none">
