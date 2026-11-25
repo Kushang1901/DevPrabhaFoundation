@@ -39,7 +39,6 @@ import { getIconWidget } from "@/utils/getIconWidget";
 
 export default function HomePage() {
   const [sliderIndex, setSliderIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
 
   const heroSlides = [
@@ -219,14 +218,13 @@ export default function HomePage() {
     }
   };
 
-  // Smooth auto-slide every 5 seconds
+  // Auto-slide every 4.5 seconds (restarting timer on interaction so each slide gets full duration)
   useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       setSliderIndex((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isPaused, heroSlides.length]);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [sliderIndex, heroSlides.length]);
 
   const nextSlide = () => {
     setSliderIndex((prev) => (prev + 1) % heroSlides.length);
@@ -260,8 +258,6 @@ export default function HomePage() {
       <section className="relative w-full overflow-hidden">
         <div
           className="relative w-full overflow-hidden bg-stone-950"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -372,17 +368,6 @@ export default function HomePage() {
 
                   {/* ==================== MOBILE CONTENT (Centered Full-Cover Hero Stack) ==================== */}
                   <div className="lg:hidden relative z-10 w-full flex-1 flex flex-col justify-center items-center text-center px-4 sm:px-6 py-10 sm:py-14 pb-14 sm:pb-18 space-y-3.5 sm:space-y-4 my-auto">
-                    {/* Trust Pill Badge */}
-                    <div
-                      className={`inline-flex items-center space-x-1.5 bg-black/40 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full shadow-sm transition-all duration-700 delay-100 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
-                        }`}
-                    >
-                      <Leaf size={12} className="text-emerald-400 fill-emerald-400 shrink-0" />
-                      <span className="text-[10px] sm:text-[11px] font-bold text-white tracking-wide">
-                        {slide.tag}
-                      </span>
-                    </div>
-
                     {/* Main Headline */}
                     <h1
                       className={`font-display font-black text-2xl sm:text-3xl md:text-4xl text-white tracking-tight leading-[1.2] drop-shadow-md transition-all duration-700 delay-200 ease-out px-1 max-w-sm sm:max-w-md`}
