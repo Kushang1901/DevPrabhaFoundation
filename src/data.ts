@@ -324,7 +324,7 @@ export const FOUNDERS: TeamMember[] = [
     socials: {
       linkedin: "https://linkedin.com",
       twitter: "https://twitter.com",
-      facebook: "https://facebook.com",
+      facebook: "https://www.facebook.com/devprabhafoundation/",
     },
   },
   {
@@ -334,7 +334,7 @@ export const FOUNDERS: TeamMember[] = [
     bio: "An active healthcare advocate specializing in pediatric nutrition. She pioneered remote maternal clinics across multiple territories, ensuring child vaccine adherence and clean water safety.",
     socials: {
       linkedin: "https://linkedin.com",
-      facebook: "https://facebook.com",
+      facebook: "https://www.facebook.com/devprabhafoundation/",
     },
   },
   {
@@ -344,7 +344,7 @@ export const FOUNDERS: TeamMember[] = [
     bio: "An active healthcare advocate specializing in pediatric nutrition. She pioneered remote maternal clinics across multiple territories, ensuring child vaccine adherence and clean water safety.",
     socials: {
       linkedin: "https://linkedin.com",
-      facebook: "https://facebook.com",
+      facebook: "https://www.facebook.com/devprabhafoundation/",
     },
   },
 ];
@@ -476,23 +476,24 @@ export const TRUST_DETAILS: TrustLegalDetails = {
   registrationNumber: "2034/2017",
   registrationDate: "04/03/2017",
   darpanId: "BR/2018/0207803",
-  section12A: "CIT/FBD/Tech/12A/2014-15/1503 dated 02/06/2014",
-  section80G: "CIT(E)/Pat/12AA/04(341)/2018-19/616-20 dated 19/04/2018",
+  section12A: "CIT(E)/Pat/12AA/04(341)/2018-19/1616-20",
+  section80G: "CIT(E)/Pat/80G/11(31)/18-19/2861-65",
   registeredOffice: "Bangra, Sugauli, East Champaran, Bihar - 845456, India",
   contactPhone: "+91 9480259311",
-  contactEmail: "kb_tiwary@yahoo.co.in",
+  contactEmail: "info@dpf.org.in",
+  secondaryEmail: "kbt@dpf.org.in",
   website: "https://dpf.org.in",
 };
 
 export const BANK_DETAILS: BankDetails = {
   accountName: "DEV PRABHA FOUNDATION",
-  accountNumber: "Provided upon verified request",
-  ifscCode: "Provided upon verified request",
-  bankName: "State Bank of India",
-  branch: "Sugauli Main Branch, East Champaran, Bihar",
+  accountNumber: "Available upon verified request",
+  ifscCode: "Available upon verified request",
+  bankName: "Punjab National Bank",
+  branch: "Sugauli, East Champaran, Bihar",
   accountType: "Current Account",
-  upiId: "devprabhafoundation@sbi",
+  upiId: "",
   taxExemption: "Eligible for 50% Tax Exemption under Section 80G of Income Tax Act 1961",
-  panNumber: "Provided on 80G Receipt",
+  panNumber: "Protected",
 };
 

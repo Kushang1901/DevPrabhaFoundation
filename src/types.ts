@@ -92,5 +92,6 @@ export interface TrustLegalDetails {
   registeredOffice: string;
   contactPhone: string;
   contactEmail: string;
+  secondaryEmail?: string;
   website: string;
 }

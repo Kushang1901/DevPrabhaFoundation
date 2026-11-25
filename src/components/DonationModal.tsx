@@ -15,6 +15,7 @@ import {
   Check,
   QrCode,
   Printer,
+  Download,
   FileText,
   MapPin,
   Lock,
@@ -196,19 +197,131 @@ export default function DonationModal({
     }
   };
 
+  const amountToWords = (num: number): string => {
+    const a = [
+      "", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ", "Eight ", "Nine ", "Ten ",
+      "Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ", "Sixteen ", "Seventeen ", "Eighteen ", "Nineteen "
+    ];
+    const b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+    if (num === 0) return "Zero Rupees Only";
+    const numStr = num.toString();
+    if (numStr.length > 9) return `Rupees ${num.toLocaleString("en-IN")} Only`;
+
+    const n = ("000000000" + num).slice(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+    if (!n) return `Rupees ${num.toLocaleString("en-IN")} Only`;
+
+    let str = "";
+    str += Number(n[1]) !== 0 ? (a[Number(n[1])] || b[Number(n[1][0])] + " " + a[Number(n[1][1])]) + "Crore " : "";
+    str += Number(n[2]) !== 0 ? (a[Number(n[2])] || b[Number(n[2][0])] + " " + a[Number(n[2][1])]) + "Lakh " : "";
+    str += Number(n[3]) !== 0 ? (a[Number(n[3])] || b[Number(n[3][0])] + " " + a[Number(n[3][1])]) + "Thousand " : "";
+    str += Number(n[4]) !== 0 ? (a[Number(n[4])] || b[Number(n[4][0])] + " " + a[Number(n[4][1])]) + "Hundred " : "";
+    str += Number(n[5]) !== 0 ? (str !== "" ? "and " : "") + (a[Number(n[5])] || b[Number(n[5][0])] + " " + a[Number(n[5][1])]) : "";
+
+    return "Rupees " + str.trim() + " Only";
+  };
+
   const handlePrintReceipt = () => {
     window.print();
   };
 
-  // Live UPI Payment Link and QR Code Generation
-  const upiIntentUri = `upi://pay?pa=${BANK_DETAILS.upiId}&pn=${encodeURIComponent(
-    BANK_DETAILS.accountName
-  )}&am=${amount}&cu=INR&tn=${encodeURIComponent(
-    `Donation by ${formData.name || "Well-wisher"}`
-  )}`;
+  const handleDownloadReceiptHtml = () => {
+    if (!receipt) return;
+    const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Donation Receipt - ${receipt.receiptId}</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #faf8f5; color: #1c1917; padding: 40px; margin: 0; }
+    .receipt { max-width: 700px; margin: auto; background: #ffffff; border: 2px solid #1b4332; border-radius: 16px; padding: 36px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .header { text-align: center; border-bottom: 2px solid #1b4332; padding-bottom: 20px; margin-bottom: 24px; }
+    .title { color: #1b4332; font-size: 24px; font-weight: 900; margin: 0; letter-spacing: 0.5px; }
+    .subtitle { color: #b45309; font-size: 13px; font-weight: bold; margin: 4px 0; }
+    .office { color: #57534e; font-size: 11px; margin: 0; }
+    .badges { display: flex; justify-content: space-between; background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 10px; padding: 12px; margin-bottom: 20px; font-size: 11px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 13px; line-height: 1.6; }
+    .amount-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px; text-align: center; margin: 20px 0; }
+    .amount-val { font-size: 28px; font-weight: 900; color: #166534; margin: 0; }
+    .amount-words { font-size: 12px; font-weight: bold; color: #15803d; margin-top: 4px; }
+    .footer { font-size: 10px; color: #78716c; border-top: 1px dashed #d6d3d1; padding-top: 16px; margin-top: 24px; line-height: 1.5; text-align: center; }
+    .stamp { margin-top: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .signature { text-align: center; border-top: 1px solid #a8a29e; width: 180px; padding-top: 6px; font-size: 11px; font-weight: bold; color: #44403c; }
+  </style>
+</head>
+<body>
+  <div class="receipt">
+    <div class="header">
+      <h1 class="title">DEV PRABHA FOUNDATION</h1>
+      <p class="subtitle">OFFICIAL DONATION ACKNOWLEDGMENT & 80G E-RECEIPT</p>
+      <p class="office">Bangra, Sugauli, East Champaran, Bihar - 845456 • info@dpf.org.in • +91 9480259311</p>
+    </div>
 
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&color=0b2545&backgroundColor=ffffff&data=${encodeURIComponent(
-    upiIntentUri
+    <div class="badges">
+      <div><strong>Trust Reg:</strong> ${TRUST_DETAILS.registrationNumber}</div>
+      <div><strong>Darpan ID:</strong> ${TRUST_DETAILS.darpanId}</div>
+      <div><strong>12A:</strong> ${TRUST_DETAILS.section12A}</div>
+      <div><strong>80G(5):</strong> ${TRUST_DETAILS.section80G}</div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <p><strong>Receipt No:</strong> ${receipt.receiptId}</p>
+        <p><strong>Date:</strong> ${receipt.date}</p>
+        <p><strong>Donor Name:</strong> ${receipt.name}</p>
+        <p><strong>Donor Mobile:</strong> ${receipt.phone}</p>
+        <p><strong>Donor Email:</strong> ${receipt.email}</p>
+        <p><strong>Donor PAN:</strong> ${receipt.pan}</p>
+        <p><strong>Address:</strong> ${receipt.address}</p>
+      </div>
+      <div>
+        <p><strong>Payment Mode:</strong> ${receipt.paymentMode}</p>
+        <p><strong>UTR / Ref Number:</strong> ${receipt.utrNumber}</p>
+        <p><strong>Tax Deduction:</strong> 50% under Section 80G</p>
+        <p><strong>Issuing Authority:</strong> Dev Prabha Foundation</p>
+      </div>
+    </div>
+
+    <div class="amount-box">
+      <div class="amount-val">₹${receipt.amount.toLocaleString("en-IN")}</div>
+      <div class="amount-words">${amountToWords(receipt.amount)}</div>
+    </div>
+
+    <div class="stamp">
+      <div style="font-size: 11px; color: #166534; font-weight: bold;">
+        ✓ Digitally Generated & Validated<br/>
+        ✓ 100% Direct Account Contribution
+      </div>
+      <div class="signature">
+        Authorised Signatory<br/>
+        <span style="font-size: 9px; font-weight: normal; color: #78716c;">Dev Prabha Foundation</span>
+      </div>
+    </div>
+
+    <div class="footer">
+      This is a computer-generated official acknowledgment receipt for income tax deduction under Section 80G(5)(vi) of the Income Tax Act, 1961. Form 10BE filing will reflect against your PAN in the Income Tax Portal.
+    </div>
+  </div>
+</body>
+</html>`;
+
+    const blob = new Blob([htmlContent], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `DevPrabha_Donation_Receipt_${receipt.receiptId}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Live Dynamic Server-Generated QR Code (Zero Bank Account Details Exposed to Client Browser)
+  const qrCodeUrl = `/api/qr?amount=${amount}&name=${encodeURIComponent(
+    formData.name || "Well-wisher"
+  )}`;
+  const upiIntentUri = `/api/pay?amount=${amount}&name=${encodeURIComponent(
+    formData.name || "Well-wisher"
   )}`;
 
   const content = (
@@ -519,30 +632,13 @@ export default function DonationModal({
               <div className="space-y-3 flex-1 text-left w-full">
                 <div>
                   <span className="text-[11px] font-bold uppercase tracking-wider text-stone-400 block">
-                    Official UPI ID (VPA)
+                    Beneficiary Account Status
                   </span>
                   <div className="flex items-center space-x-2 mt-1">
-                    <code className="bg-white px-3 py-1.5 border border-[#e7e5e4] rounded-xl font-mono text-xs font-bold text-[#1b4332] select-all">
-                      {BANK_DETAILS.upiId}
-                    </code>
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(BANK_DETAILS.upiId, "upiId")}
-                      className="p-1.5 bg-slate-200 hover:bg-slate-300 rounded-lg text-slate-700 transition-colors flex items-center space-x-1 text-xs"
-                      title="Copy UPI ID"
-                    >
-                      {copiedField === "upiId" ? (
-                        <>
-                          <Check size={14} className="text-emerald-600" />
-                          <span className="text-emerald-700 font-bold">Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy size={14} />
-                          <span>Copy</span>
-                        </>
-                      )}
-                    </button>
+                    <span className="bg-emerald-50 text-emerald-800 px-3 py-1.5 border border-emerald-200 rounded-xl font-bold text-xs flex items-center space-x-1.5 shadow-sm">
+                      <ShieldCheck size={14} className="text-emerald-600" />
+                      <span>Official Public Charitable Trust Account (PNB)</span>
+                    </span>
                   </div>
                 </div>
 
@@ -780,12 +876,39 @@ export default function DonationModal({
                 <div className="text-2xl font-display font-extrabold text-emerald-700">
                   ₹{receipt.amount.toLocaleString("en-IN")}
                 </div>
-                <div className="text-[11px] text-slate-600">
+                <div className="text-[11px] font-bold text-emerald-800 italic">
+                  {amountToWords(receipt.amount)}
+                </div>
+                <div className="text-[11px] text-slate-600 pt-1">
                   <strong>Transfer Mode:</strong> {receipt.paymentMode}
                 </div>
                 <div className="text-[11px] text-slate-600">
                   <strong>UTR / Reference ID:</strong> {receipt.utrNumber}
                 </div>
+              </div>
+            </div>
+
+            {/* Verification Stamp & Authorised Signatory */}
+            <div className="border-t border-slate-200 pt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex items-center space-x-2 text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-xl text-left">
+                <ShieldCheck size={20} className="text-emerald-700 shrink-0" />
+                <div>
+                  <strong className="block text-[11px] text-emerald-900 font-extrabold tracking-wide">
+                    VERIFIED OFFICIAL 80G RECEIPT
+                  </strong>
+                  <span className="text-[10px] text-emerald-700">
+                    50% Tax Exemption under Section 80G(5)(vi) • IT Act 1961
+                  </span>
+                </div>
+              </div>
+
+              <div className="text-left sm:text-right text-[11px]">
+                <div className="font-display font-black text-stone-800 tracking-tight">
+                  Authorised Signatory
+                </div>
+                <span className="text-[10px] text-stone-500">
+                  Dev Prabha Foundation
+                </span>
               </div>
             </div>
 
@@ -800,14 +923,23 @@ export default function DonationModal({
           </div>
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
             <button
               type="button"
               onClick={handlePrintReceipt}
               className="flex-1 bg-[#1b4332] hover:bg-[#143527] text-white font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-soft transition-all"
             >
               <Printer size={16} />
-              <span>Print / Save Receipt (PDF)</span>
+              <span>Print / Save as PDF</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDownloadReceiptHtml}
+              className="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-soft transition-all"
+            >
+              <Download size={16} />
+              <span>Download Receipt File</span>
             </button>
 
             <button
@@ -816,10 +948,10 @@ export default function DonationModal({
                 setStep("details");
                 setUtrNumber("");
               }}
-              className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center space-x-2 transition-colors"
+              className="sm:w-auto px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-1.5 transition-colors"
             >
-              <Sparkles size={16} className="text-orange-500" />
-              <span>Make Another Contribution</span>
+              <Sparkles size={14} className="text-orange-500" />
+              <span>New</span>
             </button>
           </div>
         </div>

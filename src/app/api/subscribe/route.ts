@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import fs from "fs";
 import path from "path";
+import { getDb } from "@/lib/mongodb";
 
 export async function POST(req: Request) {
   try {
@@ -36,11 +37,26 @@ export async function POST(req: Request) {
       fs.writeFileSync(subsFilePath, JSON.stringify(subscribers, null, 2), "utf8");
     }
 
+    // 2. Permanently record newsletter subscriber to MongoDB Atlas
+    try {
+      const db = await getDb();
+      if (db) {
+        await db.collection("subscribers").updateOne(
+          { email: email.toLowerCase() },
+          { $setOnInsert: { email: email.toLowerCase(), subscribedAt: new Date() } },
+          { upsert: true }
+        );
+        console.log("✅ Subscriber saved to MongoDB Atlas (subscribers collection)");
+      }
+    } catch (dbErr) {
+      console.warn("⚠️ MongoDB Atlas write warning (subscribers):", dbErr);
+    }
+
     const smtpHost = process.env.SMTP_HOST;
     const smtpPort = process.env.SMTP_PORT;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
-    const recipientEmail = process.env.ADMIN_EMAIL || "kb_tiwary@yahoo.co.in";
+    const recipientEmail = process.env.ADMIN_EMAIL || "info@dpf.org.in";
 
     if (smtpHost && smtpUser && smtpPass) {
       const transporter = nodemailer.createTransport({

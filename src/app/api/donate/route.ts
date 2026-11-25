@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { getDb } from "@/lib/mongodb";
 
 export async function POST(req: Request) {
   try {
@@ -34,11 +35,34 @@ export async function POST(req: Request) {
     console.log(`🧾 Receipt No: ${receiptNo}`);
     console.log("========================================");
 
+    // 1. Permanently record donation to MongoDB Atlas cloud database
+    try {
+      const db = await getDb();
+      if (db) {
+        await db.collection("donations").insertOne({
+          amount: Number(amount),
+          name,
+          email,
+          phone,
+          paymentMethod: paymentMethod || "UPI / Direct Transfer",
+          paymentId: verifiedId,
+          utrNumber: utrNumber || verifiedId,
+          pan: pan || "Not provided",
+          address: address || "Not provided",
+          receiptNo,
+          createdAt: new Date(),
+        });
+        console.log("✅ Donation recorded in MongoDB Atlas (donations collection)");
+      }
+    } catch (dbErr) {
+      console.warn("⚠️ MongoDB Atlas write warning (donations):", dbErr);
+    }
+
     const smtpHost = process.env.SMTP_HOST;
     const smtpPort = process.env.SMTP_PORT;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
-    const recipientEmail = process.env.ADMIN_EMAIL || "kb_tiwary@yahoo.co.in";
+    const recipientEmail = process.env.ADMIN_EMAIL || "info@dpf.org.in";
 
     if (smtpHost && smtpUser && smtpPass) {
       const transporter = nodemailer.createTransport({
@@ -57,7 +81,7 @@ export async function POST(req: Request) {
             <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #1b4332; padding-bottom: 15px;">
               <h2 style="color: #1b4332; margin: 0; font-size: 22px; font-weight: 800; letter-spacing: 0.5px;">DEV PRABHA FOUNDATION</h2>
               <p style="color: #57534e; font-size: 12px; margin: 4px 0 0 0;">Registered Public Charitable Trust • NITI Aayog Darpan: BR/2018/0207803</p>
-              <p style="color: #b45309; font-size: 11px; font-weight: bold; margin: 2px 0 0 0;">Section 80G(5)(vi) Approved: CIT(E)/Pat/12AA/04(341)/2018-19/616-20</p>
+              <p style="color: #b45309; font-size: 11px; font-weight: bold; margin: 2px 0 0 0;">Section 80G(5)(vi) Approved: CIT(E)/Pat/80G/11(31)/18-19/2861-65</p>
             </div>
             
             <p style="font-size: 14px; color: #1c1917;">Dear <strong>${name}</strong>,</p>
@@ -83,7 +107,7 @@ export async function POST(req: Request) {
             </p>
 
             <div style="margin-top: 25px; border-top: 1px solid #e7e5e4; padding-top: 15px; text-align: center; font-size: 11px; color: #a8a29e;">
-              Dev Prabha Foundation • Sugauli, East Champaran, Bihar - 845456 • kb_tiwary@yahoo.co.in • +91 9480259311
+              Dev Prabha Foundation • Sugauli, East Champaran, Bihar - 845456 • info@dpf.org.in / kbt@dpf.org.in • +91 9480259311
             </div>
           </div>
         `,

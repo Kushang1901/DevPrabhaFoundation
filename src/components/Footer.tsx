@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import {
   Mail,
@@ -9,7 +9,6 @@ import {
   Facebook,
   Twitter,
   Linkedin,
-  Send,
   Heart,
   ShieldCheck,
   ChevronRight,
@@ -18,36 +17,6 @@ import {
 import { TRUST_DETAILS } from "../data";
 
 export default function Footer() {
-  const [newsEmail, setNewsEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newsEmail || !newsEmail.includes("@")) return;
-
-    setIsSubmitting(true);
-    try {
-      const response = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: newsEmail.trim() }),
-      });
-      if (response.ok) {
-        setSubscribed(true);
-        setNewsEmail("");
-      } else {
-        setSubscribed(true);
-        setNewsEmail("");
-      }
-    } catch {
-      setSubscribed(true);
-      setNewsEmail("");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const quickLinks = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About Us & Biographies" },
@@ -105,7 +74,7 @@ export default function Footer() {
 
             <div className="flex space-x-2.5 pt-1">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/devprabhafoundation/"
                 target="_blank"
                 rel="noreferrer"
                 className="p-2 bg-[#1b4332] hover:bg-[#b45309] hover:text-white rounded-xl transition-colors text-stone-300"
@@ -183,14 +152,24 @@ export default function Footer() {
                 </a>
               </div>
 
-              <div className="flex items-center space-x-2.5">
-                <Mail size={15} className="text-amber-400 shrink-0" />
-                <a
-                  href={`mailto:${TRUST_DETAILS.contactEmail}`}
-                  className="hover:text-white transition-colors"
-                >
-                  {TRUST_DETAILS.contactEmail}
-                </a>
+              <div className="flex items-start space-x-2.5">
+                <Mail size={15} className="text-amber-400 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <a
+                    href={`mailto:${TRUST_DETAILS.contactEmail}`}
+                    className="hover:text-white transition-colors block text-xs"
+                  >
+                    {TRUST_DETAILS.contactEmail}
+                  </a>
+                  {TRUST_DETAILS.secondaryEmail && (
+                    <a
+                      href={`mailto:${TRUST_DETAILS.secondaryEmail}`}
+                      className="hover:text-white transition-colors block text-xs text-stone-400"
+                    >
+                      {TRUST_DETAILS.secondaryEmail}
+                    </a>
+                  )}
+                </div>
               </div>
 
               <div className="pt-2 text-[11px] space-y-1 border-t border-[#1b3d2f] text-stone-400">
@@ -248,37 +227,6 @@ export default function Footer() {
                 <span>Donate Direct & Get 80G Receipt</span>
               </Link>
             </div>
-
-            {/* Newsletter Subscription */}
-            <form onSubmit={handleSubscribe} className="space-y-2 pt-1">
-              <span className="block text-[11px] text-stone-400">
-                Subscribe for clinical camp dates & hospital updates:
-              </span>
-              <div className="relative">
-                <input
-                  type="email"
-                  placeholder="Enter email address"
-                  value={newsEmail}
-                  onChange={(e) => setNewsEmail(e.target.value)}
-                  className="w-full bg-[#0b1f16] border border-[#1b3d2f] rounded-xl px-3.5 py-2 text-xs text-white placeholder-stone-400 focus:outline-none focus:border-amber-500 pr-9"
-                />
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1 text-stone-400 hover:text-amber-400 transition-colors"
-                  title="Subscribe"
-                >
-                  <Send size={14} />
-                </button>
-              </div>
-
-              {subscribed && (
-                <div className="flex items-center space-x-1.5 text-emerald-400 text-[11px]">
-                  <CheckCircle size={13} />
-                  <span>Subscribed successfully! Thank you.</span>
-                </div>
-              )}
-            </form>
           </div>
         </div>
 

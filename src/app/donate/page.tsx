@@ -44,7 +44,7 @@ export default function DonatePage() {
             </div>
             <div className="flex items-center space-x-1.5 bg-white border border-[#e7e5e4] px-3 py-1.5 rounded-full shadow-soft">
               <Building2 size={16} className="text-[#1b4332]" />
-              <span>Direct SBI Account Transfer</span>
+              <span>Direct PNB Account Transfer</span>
             </div>
             <div className="flex items-center space-x-1.5 bg-white border border-[#e7e5e4] px-3 py-1.5 rounded-full shadow-soft">
               <QrCode size={16} className="text-[#b45309]" />
@@ -76,11 +76,15 @@ export default function DonatePage() {
               </div>
               <div className="flex justify-between py-1 border-b border-stone-100">
                 <span className="text-stone-500">Bank Partner:</span>
-                <strong className="text-stone-800">{BANK_DETAILS.bankName}</strong>
+                <strong className="text-stone-800">Punjab National Bank</strong>
               </div>
               <div className="flex justify-between py-1 border-b border-stone-100">
-                <span className="text-stone-500">Official UPI ID:</span>
-                <strong className="text-[#b45309] font-mono font-bold">{BANK_DETAILS.upiId}</strong>
+                <span className="text-stone-500">Branch:</span>
+                <strong className="text-stone-800">Sugauli, East Champaran, Bihar</strong>
+              </div>
+              <div className="flex justify-between py-1 border-b border-stone-100">
+                <span className="text-stone-500">Account Type:</span>
+                <strong className="text-[#1b4332] font-semibold">Public Charitable Trust Current Account</strong>
               </div>
               <div className="flex justify-between py-1">
                 <span className="text-stone-500">Gateway Deductions:</span>

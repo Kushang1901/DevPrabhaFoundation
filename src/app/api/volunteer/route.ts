@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { getDb } from "@/lib/mongodb";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, phone, address, occupation, message } = await req.json();
+    const { name, email, phone, address, occupation, message, channel } = await req.json();
 
     if (!name || !email || !phone || !address || !occupation) {
       return NextResponse.json(
@@ -20,13 +21,34 @@ export async function POST(req: Request) {
     console.log(`🏠 Address: ${address}`);
     console.log(`💼 Occupation: ${occupation}`);
     console.log(`💬 Message: ${message || "No comments"}`);
+    console.log(`🕒 Timestamp: ${new Date().toISOString()}`);
     console.log("========================================");
+
+    // 1. Record volunteer registration to MongoDB Atlas cloud database
+    try {
+      const db = await getDb();
+      if (db) {
+        await db.collection("volunteers").insertOne({
+          name,
+          email,
+          phone,
+          address,
+          occupation,
+          message: message || "No comments",
+          channel: channel || "Web Form",
+          createdAt: new Date(),
+        });
+        console.log("✅ Volunteer registration saved to MongoDB Atlas (volunteers collection)");
+      }
+    } catch (dbErr) {
+      console.warn("⚠️ MongoDB Atlas write warning (volunteers):", dbErr);
+    }
 
     const smtpHost = process.env.SMTP_HOST;
     const smtpPort = process.env.SMTP_PORT;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
-    const recipientEmail = process.env.ADMIN_EMAIL || "kb_tiwary@yahoo.co.in";
+    const recipientEmail = process.env.ADMIN_EMAIL || "info@dpf.org.in";
 
     if (smtpHost && smtpUser && smtpPass) {
       const transporter = nodemailer.createTransport({

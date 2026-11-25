@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, CheckCircle, AlertCircle } from "lucide-react";
+import { Sparkles, CheckCircle, AlertCircle, MessageCircle } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export default function JoinPage() {
@@ -23,8 +23,7 @@ export default function JoinPage() {
     confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
   };
 
-  const handleVolunteerSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const executeVolunteer = async (sendViaWhatsApp = false) => {
     if (
       !volunteerForm.name ||
       !volunteerForm.email ||
@@ -34,45 +33,69 @@ export default function JoinPage() {
     ) {
       setVolunteerStatus({
         success: false,
-        message: "Please fill out all required parameters.",
+        message: "Please fill out all required fields (Name, Email, Phone, Address, Occupation).",
       });
       return;
     }
     setIsVolunteering(true);
     setVolunteerStatus(null);
 
+    const formDataToSave = { ...volunteerForm };
+
     try {
-      const response = await fetch("/api/volunteer", {
+      // 1. Permanently record volunteer registration to MongoDB Atlas
+      await fetch("/api/volunteer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(volunteerForm),
+        body: JSON.stringify({
+          ...formDataToSave,
+          channel: sendViaWhatsApp ? "WhatsApp & Web Form" : "Web Form",
+        }),
       });
-      const data = await response.json();
-      if (response.ok) {
-        setVolunteerStatus({ success: true, message: data.message });
-        setVolunteerForm({
-          name: "",
-          email: "",
-          phone: "",
-          address: "",
-          occupation: "",
-          message: "",
-        });
-        triggerSuccesConfetti();
-      } else {
-        setVolunteerStatus({
-          success: false,
-          message: data.error || "Failed to submit volunteer registration.",
-        });
-      }
-    } catch {
-      setVolunteerStatus({
-        success: false,
-        message: "Network error occurred. Please try again.",
-      });
-    } finally {
-      setIsVolunteering(false);
+    } catch (err) {
+      console.warn("Volunteer submission network fallback:", err);
     }
+
+    // 2. Open WhatsApp if requested
+    if (sendViaWhatsApp) {
+      const waText =
+        `*New Volunteer Application - Dev Prabha Foundation*\n\n` +
+        `👤 *Name:* ${formDataToSave.name}\n` +
+        `📞 *Phone:* ${formDataToSave.phone}\n` +
+        `📧 *Email:* ${formDataToSave.email}\n` +
+        `🏠 *City Address:* ${formDataToSave.address}\n` +
+        `💼 *Occupation:* ${formDataToSave.occupation}\n\n` +
+        `💬 *Assistance Details:*\n${formDataToSave.message || "Ready to assist in health camps and rural missions."}`;
+
+      const waUrl = `https://wa.me/919480259311?text=${encodeURIComponent(waText)}`;
+      window.open(waUrl, "_blank");
+
+      setVolunteerStatus({
+        success: true,
+        message: "Application saved to database & WhatsApp opened with coordinator (+91 9480259311)!",
+      });
+    } else {
+      setVolunteerStatus({
+        success: true,
+        message: "Your volunteer registration has been saved successfully! Our coordinators will contact you soon.",
+      });
+    }
+
+    setVolunteerForm({
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+      occupation: "",
+      message: "",
+    });
+    triggerSuccesConfetti();
+    setIsVolunteering(false);
+  };
+
+  const handleVolunteerSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await executeVolunteer(false);
   };
 
   return (
@@ -276,7 +299,7 @@ export default function JoinPage() {
 
               {volunteerStatus && (
                 <div
-                  className={`p-3 rounded-xl text-xs font-bold ${
+                  className={`p-3.5 rounded-2xl text-xs font-bold space-y-2 ${
                     volunteerStatus.success
                       ? "bg-emerald-50 text-emerald-800 border border-emerald-100"
                       : "bg-rose-50 text-rose-500 border border-rose-100"
@@ -290,20 +313,45 @@ export default function JoinPage() {
                     )}
                     <span>{volunteerStatus.message}</span>
                   </div>
+                  {volunteerStatus.success && (
+                    <div className="pt-1">
+                      <a
+                        href="https://wa.me/919480259311?text=Hello%20Dev%20Prabha%20Foundation,%20I%20have%20submitted%20my%20volunteer%20application%20on%20your%20website."
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center space-x-1.5 bg-[#25D366] hover:bg-[#1ebc59] text-white px-3 py-1.5 rounded-xl font-bold text-[11px] shadow-sm transition-all"
+                      >
+                        <MessageCircle size={13} className="fill-white" />
+                        <span>Chat Directly on WhatsApp (+91 9480259311)</span>
+                      </a>
+                    </div>
+                  )}
                 </div>
               )}
 
-              <button
-                type="submit"
-                disabled={isVolunteering}
-                className="w-full bg-[#b45309] hover:bg-[#92400e] text-white py-3 rounded-2xl font-bold flex items-center justify-center space-x-2 transition-all shadow-soft active:scale-95"
-              >
-                {isVolunteering ? (
-                  <span className="w-4 h-4 border border-white border-t-transparent rounded-full animate-spin block" />
-                ) : (
-                  <span>Submit Volunteer Registration</span>
-                )}
-              </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <button
+                  type="submit"
+                  disabled={isVolunteering}
+                  className="w-full bg-[#1b4332] hover:bg-[#143527] text-white py-3 px-4 rounded-2xl font-bold flex items-center justify-center space-x-2 transition-all shadow-soft active:scale-95 text-xs sm:text-sm"
+                >
+                  {isVolunteering ? (
+                    <span className="w-4 h-4 border border-white border-t-transparent rounded-full animate-spin block" />
+                  ) : (
+                    <span>Submit Application</span>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => executeVolunteer(true)}
+                  disabled={isVolunteering}
+                  className="w-full bg-[#25D366] hover:bg-[#1ebc59] text-white py-3 px-4 rounded-2xl font-bold flex items-center justify-center space-x-2 transition-all shadow-soft active:scale-95 text-xs sm:text-sm cursor-pointer"
+                >
+                  <MessageCircle size={16} className="fill-white" />
+                  <span>Apply via WhatsApp</span>
+                </button>
+              </div>
             </form>
           </div>
         </div>

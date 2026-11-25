@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import fs from "fs";
 import path from "path";
+import { getDb } from "@/lib/mongodb";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, phone, message } = await req.json();
+    const { name, email, phone, message, channel } = await req.json();
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -57,12 +58,30 @@ export async function POST(req: Request) {
       "utf8"
     );
 
-    // 2. Dispatch email notification via SMTP (if configured in .env.local)
+    // 2. Permanently record to MongoDB Atlas cloud database
+    try {
+      const db = await getDb();
+      if (db) {
+        await db.collection("inquiries").insertOne({
+          name,
+          email,
+          phone: phone || "N/A",
+          message,
+          channel: channel || "Web Form",
+          createdAt: new Date(),
+        });
+        console.log("✅ Contact inquiry saved to MongoDB Atlas (inquiries collection)");
+      }
+    } catch (dbErr) {
+      console.warn("⚠️ MongoDB Atlas write warning (fallback kept in JSON):", dbErr);
+    }
+
+    // 3. Dispatch email notification via SMTP (if configured in .env.local)
     const smtpHost = process.env.SMTP_HOST;
     const smtpPort = process.env.SMTP_PORT;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
-    const recipientEmail = process.env.ADMIN_EMAIL || "kb_tiwary@yahoo.co.in";
+    const recipientEmail = process.env.ADMIN_EMAIL || "info@dpf.org.in";
 
     if (smtpHost && smtpUser && smtpPass) {
       const transporter = nodemailer.createTransport({

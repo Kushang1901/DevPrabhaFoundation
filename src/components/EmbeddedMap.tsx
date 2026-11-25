@@ -78,9 +78,20 @@ export default function EmbeddedMap() {
                 <span className="block text-[10px] font-mono uppercase tracking-wider text-stone-400 font-extrabold">
                   Official Inquiries
                 </span>
-                <span className="text-xs sm:text-[13px] font-semibold text-stone-800 font-mono">
-                  kb_tiwary@yahoo.co.in
-                </span>
+                <div className="space-y-0.5">
+                  <a
+                    href="mailto:info@dpf.org.in"
+                    className="block text-xs sm:text-[13px] font-semibold text-stone-800 hover:text-emerald-700 font-mono transition-colors"
+                  >
+                    info@dpf.org.in
+                  </a>
+                  <a
+                    href="mailto:kbt@dpf.org.in"
+                    className="block text-[11px] text-stone-600 hover:text-emerald-700 font-mono transition-colors"
+                  >
+                    kbt@dpf.org.in
+                  </a>
+                </div>
               </div>
             </div>
           </div>

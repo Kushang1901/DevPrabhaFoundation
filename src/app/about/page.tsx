@@ -77,13 +77,13 @@ export default function AboutPage() {
                 <div className="flex items-start space-x-2">
                   <CheckCircle2 size={14} className="text-emerald-500 shrink-0 mt-0.5" />
                   <span>
-                    <strong>Section 12A:</strong> CIT/FBD/Tech/12A/2014-15/1503
+                    <strong>Section 12A:</strong> CIT(E)/Pat/12AA/04(341)/2018-19/1616-20
                   </span>
                 </div>
                 <div className="flex items-start space-x-2">
                   <CheckCircle2 size={14} className="text-emerald-500 shrink-0 mt-0.5" />
                   <span>
-                    <strong>Section 80G:</strong> CIT(E)/Pat/12AA/04(341)/2018-19/616-20
+                    <strong>Section 80G:</strong> CIT(E)/Pat/80G/11(31)/18-19/2861-65
                   </span>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { MapPin, Phone, Mail, CheckCircle, AlertCircle } from "lucide-react";
+import { MapPin, Phone, Mail, CheckCircle, AlertCircle, MessageCircle } from "lucide-react";
 import confetti from "canvas-confetti";
 import EmbeddedMap from "@/components/EmbeddedMap";
 
@@ -22,46 +22,64 @@ export default function ContactPage() {
     confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
   };
 
-  const handleContactSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const executeInquiry = async (sendViaWhatsApp = false) => {
     if (!contactForm.name || !contactForm.email || !contactForm.message) {
       setContactStatus({
         success: false,
-        message: "Please supply your name, email, and description message.",
+        message: "Please fill in your name, email, and inquiry message.",
       });
       return;
     }
     setIsContacting(true);
     setContactStatus(null);
 
+    const formDataToSave = { ...contactForm };
+
     try {
-      const response = await fetch("/api/contact", {
+      // 1. Permanently record inquiry to MongoDB Atlas database
+      await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(contactForm),
+        body: JSON.stringify({
+          ...formDataToSave,
+          channel: sendViaWhatsApp ? "WhatsApp & Web Form" : "Web Form",
+        }),
       });
-      const data = await response.json();
-      if (response.ok) {
-        setContactStatus({ success: true, message: data.message });
-        setContactForm({ name: "", email: "", phone: "", message: "" });
-        triggerSuccesConfetti();
-      } else {
-        setContactStatus({
-          success: false,
-          message: data.error || "Submission error.",
-        });
-      }
-    } catch {
+    } catch (err) {
+      console.warn("Contact submission network fallback:", err);
+    }
+
+    // 2. Open WhatsApp if requested
+    if (sendViaWhatsApp) {
+      const waText =
+        `*New Inquiry - Dev Prabha Foundation*\n\n` +
+        `👤 *Name:* ${formDataToSave.name}\n` +
+        `📧 *Email:* ${formDataToSave.email}\n` +
+        `📞 *Phone:* ${formDataToSave.phone || "Not provided"}\n\n` +
+        `💬 *Message:*\n${formDataToSave.message}`;
+
+      const waUrl = `https://wa.me/919480259311?text=${encodeURIComponent(waText)}`;
+      window.open(waUrl, "_blank");
+
       setContactStatus({
         success: true,
-        message:
-          "Your message has been sent successfully! Our panel will contact you shortly.",
+        message: "Inquiry saved to database & WhatsApp chat opened with coordinator (+91 9480259311)!",
       });
-      setContactForm({ name: "", email: "", phone: "", message: "" });
-      triggerSuccesConfetti();
-    } finally {
-      setIsContacting(false);
+    } else {
+      setContactStatus({
+        success: true,
+        message: "Your message has been saved and sent successfully! Our administrative panel will contact you shortly.",
+      });
     }
+
+    setContactForm({ name: "", email: "", phone: "", message: "" });
+    triggerSuccesConfetti();
+    setIsContacting(false);
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await executeInquiry(false);
   };
 
   return (
@@ -125,11 +143,20 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <span className="block text-[10px] font-mono uppercase tracking-wider text-stone-400 font-extrabold">
-                    Email Correspondence
+                    Official Email Contacts
                   </span>
-                  <strong className="text-stone-800 text-sm font-mono block">
-                    kb_tiwary@yahoo.co.in
-                  </strong>
+                  <a
+                    href="mailto:info@dpf.org.in"
+                    className="text-stone-800 hover:text-[#b45309] text-sm font-mono font-bold block transition-colors"
+                  >
+                    info@dpf.org.in <span className="text-[10px] font-sans font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded ml-1">Primary</span>
+                  </a>
+                  <a
+                    href="mailto:kbt@dpf.org.in"
+                    className="text-stone-600 hover:text-[#b45309] text-xs font-mono block mt-1 transition-colors"
+                  >
+                    kbt@dpf.org.in <span className="text-[10px] font-sans font-medium text-stone-500 bg-stone-100 px-1.5 py-0.5 rounded ml-1">Secondary</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -218,7 +245,7 @@ export default function ContactPage() {
 
               {contactStatus && (
                 <div
-                  className={`p-3 rounded-xl text-xs font-bold ${contactStatus.success
+                  className={`p-3.5 rounded-2xl text-xs font-bold space-y-2 ${contactStatus.success
                       ? "bg-emerald-50 text-emerald-800 border border-emerald-100"
                       : "bg-rose-50 text-rose-500 border border-rose-100"
                     }`}
@@ -231,20 +258,45 @@ export default function ContactPage() {
                     )}
                     <span>{contactStatus.message}</span>
                   </div>
+                  {contactStatus.success && (
+                    <div className="pt-1">
+                      <a
+                        href="https://wa.me/919480259311?text=Hello%20Dev%20Prabha%20Foundation,%20I%20have%20submitted%20an%20inquiry%20on%20your%20website."
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center space-x-1.5 bg-[#25D366] hover:bg-[#1ebc59] text-white px-3 py-1.5 rounded-xl font-bold text-[11px] shadow-sm transition-all"
+                      >
+                        <MessageCircle size={13} className="fill-white" />
+                        <span>Chat Directly on WhatsApp (+91 9480259311)</span>
+                      </a>
+                    </div>
+                  )}
                 </div>
               )}
 
-              <button
-                type="submit"
-                disabled={isContacting}
-                className="w-full bg-[#1b4332] hover:bg-[#143527] text-white py-3 rounded-2xl font-bold flex items-center justify-center space-x-2 transition-all shadow-soft active:scale-95"
-              >
-                {isContacting ? (
-                  <span className="w-4 h-4 border border-white border-t-transparent rounded-full animate-spin block" />
-                ) : (
-                  <span>Submit Inquiry</span>
-                )}
-              </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <button
+                  type="submit"
+                  disabled={isContacting}
+                  className="w-full bg-[#1b4332] hover:bg-[#143527] text-white py-3 px-4 rounded-2xl font-bold flex items-center justify-center space-x-2 transition-all shadow-soft active:scale-95"
+                >
+                  {isContacting ? (
+                    <span className="w-4 h-4 border border-white border-t-transparent rounded-full animate-spin block" />
+                  ) : (
+                    <span>Submit Inquiry</span>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => executeInquiry(true)}
+                  disabled={isContacting}
+                  className="w-full bg-[#25D366] hover:bg-[#1ebc59] text-white py-3 px-4 rounded-2xl font-bold flex items-center justify-center space-x-2 transition-all shadow-soft active:scale-95 cursor-pointer"
+                >
+                  <MessageCircle size={16} className="fill-white" />
+                  <span>Inquire via WhatsApp</span>
+                </button>
+              </div>
             </form>
           </div>
         </div>

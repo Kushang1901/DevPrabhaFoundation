@@ -83,18 +83,27 @@
 
 /* Clean Print Styles for 80G Receipts */
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
   body {
     background: #ffffff !important;
     color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
-  header, nav, footer, #floating-comms-panel, button:not(.print-include) {
+  header, nav, footer, #floating-comms-panel, #google_translate_element, button, .no-print {
     display: none !important;
   }
   .receipt-printable {
     box-shadow: none !important;
-    border: 1px solid #78716c !important;
-    margin: 0 !important;
+    border: 2px solid #1b4332 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
     max-width: 100% !important;
+    background: #ffffff !important;
+    page-break-inside: avoid !important;
   }
 }
 
