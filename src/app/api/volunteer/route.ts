@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     const smtpPort = process.env.SMTP_PORT;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
-    const recipientEmail = process.env.ADMIN_EMAIL || "vkspt22@gmail.com";
+    const recipientEmail = process.env.ADMIN_EMAIL || "kb_tiwary@yahoo.co.in";
 
     if (smtpHost && smtpUser && smtpPass) {
       const transporter = nodemailer.createTransport({
