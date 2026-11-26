@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import DonationModal from "@/components/DonationModal";
 import {
   ShieldCheck,
@@ -9,10 +9,42 @@ import {
   Heart,
   HelpCircle,
   FileCheck,
+  ChevronDown,
 } from "lucide-react";
 import { BANK_DETAILS, TRUST_DETAILS } from "@/data";
 
 export default function DonatePage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      question: "How do I get my Section 80G tax receipt?",
+      answer:
+        "When you make a direct transfer and enter your UTR/Reference number along with your PAN card, an official e-receipt is generated immediately for download. We also email a copy for your income tax filings.",
+    },
+    {
+      question: "Why direct bank / UPI transfer instead of Razorpay?",
+      answer:
+        "Payment gateways take 2% to 3% in processing fees. Direct account transfers ensure 100% of your funds go straight to healthcare and village beneficiaries without deductions.",
+    },
+    {
+      question: "Can I donate using Google Pay, PhonePe, or Paytm?",
+      answer: (
+        <>
+          Yes! Simply scan our official UPI QR code with any mobile UPI app or send directly to our VPA{" "}
+          <code className="font-mono bg-stone-100 px-1.5 py-0.5 rounded text-[#b45309] font-medium">
+            {BANK_DETAILS.upiId}
+          </code>
+          .
+        </>
+      ),
+    },
+    {
+      question: "What projects do my donations support?",
+      answer:
+        "Your donations directly fund the upcoming 200-bed DevPrabha Memorial Hospital in Sugauli, Sanjeevani Free Medical Camps, school retention tutoring, and rural women skill centers.",
+    },
+  ];
   return (
     <div
       id="donate-tab-content"
@@ -127,51 +159,74 @@ export default function DonatePage() {
           </div>
         </div>
 
-        {/* Frequently Asked Questions */}
+        {/* Frequently Asked Questions: Interactive Accordion Bars */}
         <div className="max-w-4xl mx-auto bg-[#f5f2eb]/70 rounded-3xl p-6 md:p-8 space-y-6 border border-[#e7e5e4]">
-          <div className="flex items-center space-x-2 text-[#1b4332]">
-            <HelpCircle size={20} className="text-[#b45309]" />
-            <h3 className="font-display font-bold text-xl tracking-tight">
-              Donation Frequently Asked Questions
-            </h3>
+          <div className="flex items-center space-x-2.5 text-[#1b4332]">
+            <HelpCircle size={22} className="text-[#b45309] shrink-0" />
+            <div>
+              <h3 className="font-display font-bold text-xl sm:text-2xl tracking-tight text-[#1b4332]">
+                Donation Frequently Asked Questions
+              </h3>
+              <p className="text-stone-500 text-xs sm:text-sm mt-0.5">
+                Click on any question bar to view details; click again to close.
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs text-stone-600 leading-relaxed">
-            <div className="bg-white p-4 rounded-2xl border border-[#e7e5e4] space-y-1.5 shadow-soft">
-              <strong className="text-stone-900 font-bold block text-sm">
-                How do I get my Section 80G tax receipt?
-              </strong>
-              <p>
-                When you make a direct transfer and enter your UTR/Reference number along with your PAN card, an official e-receipt is generated immediately for download. We also email a copy for your income tax filings.
-              </p>
-            </div>
+          <div className="space-y-3">
+            {faqs.map((faq, index) => {
+              const isOpen = openFaq === index;
+              return (
+                <div
+                  key={index}
+                  className={`bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${
+                    isOpen
+                      ? "border-[#1b4332]/40 shadow-soft"
+                      : "border-[#e7e5e4] hover:border-stone-300 shadow-2xs hover:shadow-soft"
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(isOpen ? null : index)}
+                    className="w-full px-5 py-4 sm:px-6 sm:py-4.5 flex items-center justify-between text-left cursor-pointer group transition-colors focus:outline-none"
+                    aria-expanded={isOpen}
+                  >
+                    <span
+                      className={`font-bold text-sm sm:text-[15px] transition-colors pr-4 ${
+                        isOpen
+                          ? "text-[#1b4332]"
+                          : "text-stone-900 group-hover:text-[#1b4332]"
+                      }`}
+                    >
+                      {faq.question}
+                    </span>
+                    <div
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                        isOpen
+                          ? "bg-[#1b4332] text-white rotate-180"
+                          : "bg-stone-100 text-stone-500 group-hover:bg-stone-200 group-hover:text-stone-800"
+                      }`}
+                    >
+                      <ChevronDown size={18} />
+                    </div>
+                  </button>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#e7e5e4] space-y-1.5 shadow-soft">
-              <strong className="text-stone-900 font-bold block text-sm">
-                Why direct bank / UPI transfer instead of Razorpay?
-              </strong>
-              <p>
-                Payment gateways take 2% to 3% in processing fees. Direct account transfers ensure 100% of your funds go straight to healthcare and village beneficiaries without deductions.
-              </p>
-            </div>
-
-            <div className="bg-white p-4 rounded-2xl border border-[#e7e5e4] space-y-1.5 shadow-soft">
-              <strong className="text-stone-900 font-bold block text-sm">
-                Can I donate using Google Pay, PhonePe, or Paytm?
-              </strong>
-              <p>
-                Yes! Simply scan our official UPI QR code with any mobile UPI app or send directly to our VPA <code className="font-mono bg-stone-100 px-1 py-0.5 rounded text-[#b45309]">{BANK_DETAILS.upiId}</code>.
-              </p>
-            </div>
-
-            <div className="bg-white p-4 rounded-2xl border border-[#e7e5e4] space-y-1.5 shadow-soft">
-              <strong className="text-stone-900 font-bold block text-sm">
-                What projects do my donations support?
-              </strong>
-              <p>
-                Your donations directly fund the upcoming 200-bed DevPrabha Memorial Hospital in Sugauli, Sanjeevani Free Medical Camps, school retention tutoring, and rural women skill centers.
-              </p>
-            </div>
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      isOpen
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-5 pb-5 sm:px-6 sm:pb-5 pt-1 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-100/90">
+                        {faq.answer}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -82,7 +82,7 @@ export default function RootLayout({
         <Preloader />
         <TranslationLoader />
         <Navbar />
-        <main className="flex-grow pt-[64px] md:pt-[82px]">{children}</main>
+        <main className="flex-grow pt-[62px] sm:pt-[66px] md:pt-[88px] lg:pt-[94px]">{children}</main>
         <Footer />
         <BackToTop />
         <FloatingActions />

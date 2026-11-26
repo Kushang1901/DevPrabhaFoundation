@@ -40,29 +40,14 @@ export default function Footer() {
         >
           {/* Column 1: Brand & Bio */}
           <div className="space-y-4">
-            <Link href="/" className="inline-block group notranslate" translate="no">
-              <div className="rounded-xl overflow-hidden border border-white/20 shadow-sm bg-white p-2.5 inline-flex items-center space-x-2.5 transition-transform group-hover:scale-105 notranslate" translate="no">
+            <Link href="/" className="inline-block group notranslate" translate="no" aria-label="DevPrabha Foundation">
+              <div className="rounded-xl overflow-hidden border border-white/20 shadow-sm bg-white p-2 sm:p-2.5 inline-flex items-center transition-transform group-hover:scale-105 notranslate" translate="no">
                 <img
-                  src="/images/logo.png"
-                  alt="Dev Prabha Foundation"
-                  className="h-9 sm:h-10 w-auto object-contain shrink-0 notranslate"
+                  src="/images/triallogo-3.png"
+                  alt="DevPrabha Foundation"
+                  className="h-10 sm:h-12 w-auto max-w-[240px] sm:max-w-[270px] object-contain shrink-0 notranslate"
                   translate="no"
                 />
-                <div className="flex flex-col justify-center leading-none select-none text-left notranslate" translate="no">
-                  <span className="font-display font-black text-base tracking-tight text-[#b45309] leading-none notranslate" translate="no">
-                    DevPrabha
-                  </span>
-                  <div className="relative inline-block mt-0.5 notranslate" translate="no">
-                    <span className="font-display font-black text-sm tracking-tight text-[#163352] leading-none block notranslate" translate="no">
-                      Foundation
-                    </span>
-                    <img
-                      src="/images/underline.png"
-                      alt=""
-                      className="w-full h-auto max-h-[7px] object-contain select-none pointer-events-none mt-0.5"
-                    />
-                  </div>
-                </div>
               </div>
             </Link>
 
