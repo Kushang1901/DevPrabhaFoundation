@@ -21,6 +21,8 @@ import {
   ShieldCheck,
   Scissors,
   Sprout,
+  TrendingUp,
+  Handshake,
 } from "lucide-react";
 
 // Components
@@ -324,23 +326,56 @@ export default function HomePage() {
                         {slide.description}
                       </p>
 
-                      {/* Feature Icons Row (Desktop Only) */}
+                      {/* 4 Core Pillars: H.E.L.P. (Healthcare, Education, Livelihood in Partnership) */}
                       <div
-                        className={`flex items-center space-x-6 xl:space-x-8 pt-1.5 transition-all duration-700 delay-350 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                        className={`flex items-center space-x-2.5 sm:space-x-3.5 xl:space-x-5 pt-2 pb-1 transition-all duration-700 delay-350 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                           }`}
                       >
-                        {slide.features.map((feat, fIdx) => (
-                          <div key={fIdx} className="flex items-center space-x-2.5">
-                            <div className="shrink-0">{renderFeatureIcon(feat.icon)}</div>
-                            <div className="text-left text-xs font-semibold text-stone-200 leading-tight">
-                              <span>{feat.line1}</span>
-                              <span className="block text-stone-300">{feat.line2}</span>
-                            </div>
-                            {fIdx < slide.features.length - 1 && (
-                              <div className="h-7 w-[1px] bg-white/20 ml-6 hidden xl:block" />
-                            )}
+                        {/* Healthcare */}
+                        <div className="flex flex-col items-center group text-center min-w-[70px] sm:min-w-[80px]">
+                          <div className="w-10 h-10 xl:w-11 xl:h-11 rounded-full bg-[#1d4ed8] text-white flex items-center justify-center shadow-lg shadow-blue-950/40 ring-2 ring-white/20 transition-transform group-hover:scale-110">
+                            <HeartPulse size={20} className="text-white" />
                           </div>
-                        ))}
+                          <span className="mt-1.5 font-display font-black text-[10px] xl:text-[11.5px] uppercase tracking-wider text-white drop-shadow">
+                            Healthcare
+                          </span>
+                        </div>
+
+                        <div className="h-8 w-[1px] bg-white/30 shrink-0" />
+
+                        {/* Education */}
+                        <div className="flex flex-col items-center group text-center min-w-[70px] sm:min-w-[80px]">
+                          <div className="w-10 h-10 xl:w-11 xl:h-11 rounded-full bg-[#15803d] text-white flex items-center justify-center shadow-lg shadow-green-950/40 ring-2 ring-white/20 transition-transform group-hover:scale-110">
+                            <BookOpen size={20} className="text-white" />
+                          </div>
+                          <span className="mt-1.5 font-display font-black text-[10px] xl:text-[11.5px] uppercase tracking-wider text-white drop-shadow">
+                            Education
+                          </span>
+                        </div>
+
+                        <div className="h-8 w-[1px] bg-white/30 shrink-0" />
+
+                        {/* Livelihood */}
+                        <div className="flex flex-col items-center group text-center min-w-[70px] sm:min-w-[80px]">
+                          <div className="w-10 h-10 xl:w-11 xl:h-11 rounded-full bg-[#d97706] text-white flex items-center justify-center shadow-lg shadow-amber-950/40 ring-2 ring-white/20 transition-transform group-hover:scale-110">
+                            <TrendingUp size={20} className="text-white" />
+                          </div>
+                          <span className="mt-1.5 font-display font-black text-[10px] xl:text-[11.5px] uppercase tracking-wider text-white drop-shadow">
+                            Livelihood
+                          </span>
+                        </div>
+
+                        <div className="h-8 w-[1px] bg-white/30 shrink-0" />
+
+                        {/* Partnership */}
+                        <div className="flex flex-col items-center group text-center min-w-[70px] sm:min-w-[80px]">
+                          <div className="w-10 h-10 xl:w-11 xl:h-11 rounded-full bg-[#1e3a8a] text-white flex items-center justify-center shadow-lg shadow-blue-950/40 ring-2 ring-white/20 transition-transform group-hover:scale-110">
+                            <Handshake size={20} className="text-white" />
+                          </div>
+                          <span className="mt-1.5 font-display font-black text-[10px] xl:text-[11.5px] uppercase tracking-wider text-white drop-shadow">
+                            Partnership
+                          </span>
+                        </div>
                       </div>
 
                       {/* CTA Buttons */}
@@ -394,6 +429,58 @@ export default function HomePage() {
                     >
                       {slide.description}
                     </p>
+
+                    {/* 4 Core Pillars: H.E.L.P. (Mobile) */}
+                    <div
+                      className={`flex items-center justify-center space-x-2 sm:space-x-3 py-1 transition-all duration-700 delay-350 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+                        }`}
+                    >
+                      {/* Healthcare */}
+                      <div className="flex flex-col items-center min-w-[58px]">
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1d4ed8] text-white flex items-center justify-center shadow ring-1 ring-white/25">
+                          <HeartPulse size={14} className="text-white" />
+                        </div>
+                        <span className="mt-1 font-display font-bold text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-white">
+                          Healthcare
+                        </span>
+                      </div>
+
+                      <div className="h-5 w-[1px] bg-white/25 shrink-0" />
+
+                      {/* Education */}
+                      <div className="flex flex-col items-center min-w-[58px]">
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#15803d] text-white flex items-center justify-center shadow ring-1 ring-white/25">
+                          <BookOpen size={14} className="text-white" />
+                        </div>
+                        <span className="mt-1 font-display font-bold text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-white">
+                          Education
+                        </span>
+                      </div>
+
+                      <div className="h-5 w-[1px] bg-white/25 shrink-0" />
+
+                      {/* Livelihood */}
+                      <div className="flex flex-col items-center min-w-[58px]">
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#d97706] text-white flex items-center justify-center shadow ring-1 ring-white/25">
+                          <TrendingUp size={14} className="text-white" />
+                        </div>
+                        <span className="mt-1 font-display font-bold text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-white">
+                          Livelihood
+                        </span>
+                      </div>
+
+                      <div className="h-5 w-[1px] bg-white/25 shrink-0" />
+
+                      {/* Partnership */}
+                      <div className="flex flex-col items-center min-w-[58px]">
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1e3a8a] text-white flex items-center justify-center shadow ring-1 ring-white/25">
+                          <Handshake size={14} className="text-white" />
+                        </div>
+                        <span className="mt-1 font-display font-bold text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-white">
+                          Partnership
+                        </span>
+                      </div>
+                    </div>
 
                     {/* CTA Buttons (Stacked Full-Width on Mobile) */}
                     <div
