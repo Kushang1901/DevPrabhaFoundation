@@ -110,19 +110,19 @@ export default function Navbar() {
             : "bg-white/95 backdrop-blur-md shadow-sm py-1.5 sm:py-2 border-b border-[#f0eee9]"
           }`}
       >
-        <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-6">
-          <div className="flex justify-between items-center">
-            {/* Brand Identity: Respected Logo with Title (Shifted slightly left & slightly reduced size) */}
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-5 lg:px-6">
+          <div className="flex justify-between items-center w-full">
+            {/* Brand Identity: Respected Logo with Title (Responsively sized for Mobile & Desktop) */}
             <Link
               href="/"
-              className="group flex items-center shrink-0 -ml-0.5 sm:-ml-1.5 lg:-ml-2.5 py-0.5 transition-transform group-hover:scale-[1.01] notranslate"
+              className="group flex items-center shrink min-w-0 -ml-0.5 sm:-ml-1.5 lg:-ml-2.5 py-0.5 mr-1.5 sm:mr-3 transition-transform group-hover:scale-[1.01] notranslate"
               translate="no"
               aria-label="DevPrabha Foundation Home"
             >
               <img
                 src="/images/triallogo-3.png"
                 alt="DevPrabha Foundation - HELP - Healthcare, Education, Livelihood in Partnership"
-                className="h-[38px] min-[360px]:h-[42px] sm:h-[46px] md:h-[50px] lg:h-[52px] xl:h-[56px] w-auto max-w-[210px] min-[360px]:max-w-[240px] sm:max-w-[280px] md:max-w-[310px] lg:max-w-[330px] xl:max-w-[350px] object-contain shrink-0 notranslate"
+                className="h-[30px] min-[360px]:h-[34px] min-[400px]:h-[38px] sm:h-[44px] md:h-[48px] lg:h-[52px] xl:h-[56px] w-auto max-w-[165px] min-[360px]:max-w-[195px] min-[400px]:max-w-[220px] sm:max-w-[260px] md:max-w-[300px] lg:max-w-[330px] xl:max-w-[350px] object-contain shrink notranslate"
                 translate="no"
               />
             </Link>
@@ -161,25 +161,27 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Mobile & Tablet Controls: Fully responsive, never pushes Hamburger off-screen */}
-            <div className="lg:hidden flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+            {/* Mobile & Tablet Controls: Fully responsive, guaranteed never cropped or pushed off-screen */}
+            <div className="lg:hidden flex items-center space-x-1 sm:space-x-1.5 shrink-0">
               <LanguageSelector variant="navbar" />
+
               <Link
                 href="/donate"
-                className="px-2.5 sm:px-3 py-1.5 bg-[#b45309] hover:bg-[#92400e] text-white rounded-full flex items-center space-x-1 shadow-soft text-[11px] sm:text-xs font-bold uppercase tracking-wider shrink-0 transition-transform active:scale-95"
+                className="h-8 w-8 min-[440px]:w-auto min-[440px]:px-2.5 rounded-full bg-[#b45309] hover:bg-[#92400e] text-white flex items-center justify-center space-x-1 shadow-soft text-[11px] font-bold uppercase tracking-wider shrink-0 transition-transform active:scale-95"
                 title="Donate Direct"
+                aria-label="Donate Direct"
               >
-                <Heart size={12} className="fill-white" />
-                <span className="hidden min-[340px]:inline">Donate</span>
+                <Heart size={13} className="fill-white" />
+                <span className="hidden min-[440px]:inline">Donate</span>
               </Link>
 
               <button
                 onClick={() => setIsOpen(true)}
-                className="p-1.5 sm:p-2 rounded-xl hover:bg-[#f5f2eb] text-[#1b4332] transition-colors border border-stone-200/80 bg-stone-50 shrink-0"
+                className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl hover:bg-[#f5f2eb] text-[#1b4332] transition-colors border border-stone-200/80 bg-stone-50 shrink-0 flex items-center justify-center"
                 aria-label="Open Navigation Drawer"
               >
-                <Menu size={20} className="sm:hidden" />
-                <Menu size={22} className="hidden sm:block" />
+                <Menu size={19} className="sm:hidden" />
+                <Menu size={21} className="hidden sm:block" />
               </button>
             </div>
           </div>

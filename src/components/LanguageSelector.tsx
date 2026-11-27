@@ -259,15 +259,20 @@ export default function LanguageSelector({ variant = "navbar" }: LanguageSelecto
 
   // Default navbar variant (clean pill next to Donate button)
   return (
-    <div className="relative notranslate" ref={dropdownRef}>
+    <div className="relative notranslate shrink-0" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-full border border-stone-200 hover:border-emerald-600 bg-stone-50 hover:bg-emerald-50/50 text-stone-700 hover:text-emerald-800 transition-all text-[11px] sm:text-xs font-bold shadow-xs active:scale-95"
+        className="flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-2.5 py-1.5 rounded-full border border-stone-200 hover:border-emerald-600 bg-stone-50 hover:bg-emerald-50/50 text-stone-700 hover:text-emerald-800 transition-all text-[10.5px] sm:text-xs font-bold shadow-xs active:scale-95 shrink-0 h-8 sm:h-auto"
         title="Change Language"
       >
         <Globe size={13} className="text-emerald-700 shrink-0" />
-        <span className="truncate max-w-[70px] sm:max-w-[85px]">{currentLang.native.split(" ")[0]}</span>
-        <ChevronDown size={11} className={`text-stone-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        <span className="hidden min-[380px]:inline truncate max-w-[65px] sm:max-w-[85px]">
+          {currentLang.native.split(" ")[0]}
+        </span>
+        <span className="min-[380px]:hidden font-bold uppercase text-[10px] tracking-tight">
+          {currentLang.code.slice(0, 2)}
+        </span>
+        <ChevronDown size={11} className={`text-stone-400 transition-transform shrink-0 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
