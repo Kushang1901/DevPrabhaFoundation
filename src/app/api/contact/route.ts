@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import fs from "fs";
 import path from "path";
-import { getDb } from "@/lib/mongodb";
+import { getDb, getLastDbError } from "@/lib/mongodb";
 
 export async function POST(req: Request) {
   try {
@@ -28,7 +28,11 @@ export async function POST(req: Request) {
     const db = await getDb();
     if (!db) {
       return NextResponse.json(
-        { error: "Database connection unavailable. Please check MONGODB_URI configuration." },
+        {
+          error: `Database connection unavailable: ${
+            getLastDbError() || "Please check MONGODB_URI configuration."
+          }`,
+        },
         { status: 503 }
       );
     }
