@@ -36,27 +36,28 @@ export async function POST(req: Request) {
     console.log("========================================");
 
     // 1. Permanently record donation to MongoDB Atlas cloud database
-    try {
-      const db = await getDb();
-      if (db) {
-        await db.collection("donations").insertOne({
-          amount: Number(amount),
-          name,
-          email,
-          phone,
-          paymentMethod: paymentMethod || "UPI / Direct Transfer",
-          paymentId: verifiedId,
-          utrNumber: utrNumber || verifiedId,
-          pan: pan || "Not provided",
-          address: address || "Not provided",
-          receiptNo,
-          createdAt: new Date(),
-        });
-        console.log("✅ Donation recorded in MongoDB Atlas (donations collection)");
-      }
-    } catch (dbErr) {
-      console.warn("⚠️ MongoDB Atlas write warning (donations):", dbErr);
+    const db = await getDb();
+    if (!db) {
+      return NextResponse.json(
+        { error: "Database connection unavailable. Please check MONGODB_URI configuration." },
+        { status: 503 }
+      );
     }
+
+    await db.collection("donations").insertOne({
+      amount: Number(amount),
+      name,
+      email,
+      phone,
+      paymentMethod: paymentMethod || "UPI / Direct Transfer",
+      paymentId: verifiedId,
+      utrNumber: utrNumber || verifiedId,
+      pan: pan || "Not provided",
+      address: address || "Not provided",
+      receiptNo,
+      createdAt: new Date(),
+    });
+    console.log("✅ Donation recorded in MongoDB Atlas (donations collection)");
 
     const smtpHost = process.env.SMTP_HOST;
     const smtpPort = process.env.SMTP_PORT;

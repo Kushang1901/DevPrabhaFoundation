@@ -25,24 +25,25 @@ export async function POST(req: Request) {
     console.log("========================================");
 
     // 1. Record volunteer registration to MongoDB Atlas cloud database
-    try {
-      const db = await getDb();
-      if (db) {
-        await db.collection("volunteers").insertOne({
-          name,
-          email,
-          phone,
-          address,
-          occupation,
-          message: message || "No comments",
-          channel: channel || "Web Form",
-          createdAt: new Date(),
-        });
-        console.log("✅ Volunteer registration saved to MongoDB Atlas (volunteers collection)");
-      }
-    } catch (dbErr) {
-      console.warn("⚠️ MongoDB Atlas write warning (volunteers):", dbErr);
+    const db = await getDb();
+    if (!db) {
+      return NextResponse.json(
+        { error: "Database connection unavailable. Please check MONGODB_URI configuration." },
+        { status: 503 }
+      );
     }
+
+    await db.collection("volunteers").insertOne({
+      name,
+      email,
+      phone,
+      address,
+      occupation,
+      message: message || "No comments",
+      channel: channel || "Web Form",
+      createdAt: new Date(),
+    });
+    console.log("✅ Volunteer registration saved to MongoDB Atlas (volunteers collection)");
 
     const smtpHost = process.env.SMTP_HOST;
     const smtpPort = process.env.SMTP_PORT;

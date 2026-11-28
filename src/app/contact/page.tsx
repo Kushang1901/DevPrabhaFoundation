@@ -37,7 +37,7 @@ export default function ContactPage() {
 
     try {
       // 1. Permanently record inquiry to MongoDB Atlas database
-      await fetch("/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -45,36 +45,45 @@ export default function ContactPage() {
           channel: sendViaWhatsApp ? "WhatsApp & Web Form" : "Web Form",
         }),
       });
-    } catch (err) {
-      console.warn("Contact submission network fallback:", err);
-    }
 
-    // 2. Open WhatsApp if requested
-    if (sendViaWhatsApp) {
-      const waText =
-        `*New Inquiry - Dev Prabha Foundation*\n\n` +
-        `👤 *Name:* ${formDataToSave.name}\n` +
-        `📧 *Email:* ${formDataToSave.email}\n` +
-        `📞 *Phone:* ${formDataToSave.phone || "Not provided"}\n\n` +
-        `💬 *Message:*\n${formDataToSave.message}`;
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to save inquiry to database.");
+      }
 
-      const waUrl = `https://wa.me/919480259311?text=${encodeURIComponent(waText)}`;
-      window.open(waUrl, "_blank");
+      // 2. Open WhatsApp if requested
+      if (sendViaWhatsApp) {
+        const waText =
+          `*New Inquiry - Dev Prabha Foundation*\n\n` +
+          `👤 *Name:* ${formDataToSave.name}\n` +
+          `📧 *Email:* ${formDataToSave.email}\n` +
+          `📞 *Phone:* ${formDataToSave.phone || "Not provided"}\n\n` +
+          `💬 *Message:*\n${formDataToSave.message}`;
 
+        const waUrl = `https://wa.me/919480259311?text=${encodeURIComponent(waText)}`;
+        window.open(waUrl, "_blank");
+
+        setContactStatus({
+          success: true,
+          message: "Inquiry saved to database & WhatsApp chat opened with coordinator (+91 9480259311)!",
+        });
+      } else {
+        setContactStatus({
+          success: true,
+          message: "Your message has been saved and sent successfully! Our administrative panel will contact you shortly.",
+        });
+      }
+
+      setContactForm({ name: "", email: "", phone: "", message: "" });
+      triggerSuccesConfetti();
+    } catch (err: any) {
       setContactStatus({
-        success: true,
-        message: "Inquiry saved to database & WhatsApp chat opened with coordinator (+91 9480259311)!",
+        success: false,
+        message: err?.message || "Unable to save your message. Please try again or contact us on WhatsApp.",
       });
-    } else {
-      setContactStatus({
-        success: true,
-        message: "Your message has been saved and sent successfully! Our administrative panel will contact you shortly.",
-      });
+    } finally {
+      setIsContacting(false);
     }
-
-    setContactForm({ name: "", email: "", phone: "", message: "" });
-    triggerSuccesConfetti();
-    setIsContacting(false);
   };
 
   const handleContactSubmit = async (e: React.FormEvent) => {

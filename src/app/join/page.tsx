@@ -44,7 +44,7 @@ export default function JoinPage() {
 
     try {
       // 1. Permanently record volunteer registration to MongoDB Atlas
-      await fetch("/api/volunteer", {
+      const res = await fetch("/api/volunteer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -52,45 +52,54 @@ export default function JoinPage() {
           channel: sendViaWhatsApp ? "WhatsApp & Web Form" : "Web Form",
         }),
       });
-    } catch (err) {
-      console.warn("Volunteer submission network fallback:", err);
-    }
 
-    // 2. Open WhatsApp if requested
-    if (sendViaWhatsApp) {
-      const waText =
-        `*New Volunteer Application - Dev Prabha Foundation*\n\n` +
-        `👤 *Name:* ${formDataToSave.name}\n` +
-        `📞 *Phone:* ${formDataToSave.phone}\n` +
-        `📧 *Email:* ${formDataToSave.email}\n` +
-        `🏠 *City Address:* ${formDataToSave.address}\n` +
-        `💼 *Occupation:* ${formDataToSave.occupation}\n\n` +
-        `💬 *Assistance Details:*\n${formDataToSave.message || "Ready to assist in health camps and rural missions."}`;
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to save volunteer application to database.");
+      }
 
-      const waUrl = `https://wa.me/919480259311?text=${encodeURIComponent(waText)}`;
-      window.open(waUrl, "_blank");
+      // 2. Open WhatsApp if requested
+      if (sendViaWhatsApp) {
+        const waText =
+          `*New Volunteer Application - Dev Prabha Foundation*\n\n` +
+          `👤 *Name:* ${formDataToSave.name}\n` +
+          `📞 *Phone:* ${formDataToSave.phone}\n` +
+          `📧 *Email:* ${formDataToSave.email}\n` +
+          `🏠 *City Address:* ${formDataToSave.address}\n` +
+          `💼 *Occupation:* ${formDataToSave.occupation}\n\n` +
+          `💬 *Assistance Details:*\n${formDataToSave.message || "Ready to assist in health camps and rural missions."}`;
 
-      setVolunteerStatus({
-        success: true,
-        message: "Application saved to database & WhatsApp opened with coordinator (+91 9480259311)!",
+        const waUrl = `https://wa.me/919480259311?text=${encodeURIComponent(waText)}`;
+        window.open(waUrl, "_blank");
+
+        setVolunteerStatus({
+          success: true,
+          message: "Application saved to database & WhatsApp opened with coordinator (+91 9480259311)!",
+        });
+      } else {
+        setVolunteerStatus({
+          success: true,
+          message: "Your volunteer registration has been saved successfully! Our coordinators will contact you soon.",
+        });
+      }
+
+      setVolunteerForm({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        occupation: "",
+        message: "",
       });
-    } else {
+      triggerSuccesConfetti();
+    } catch (err: any) {
       setVolunteerStatus({
-        success: true,
-        message: "Your volunteer registration has been saved successfully! Our coordinators will contact you soon.",
+        success: false,
+        message: err?.message || "Unable to save your application. Please try again or contact us on WhatsApp.",
       });
+    } finally {
+      setIsVolunteering(false);
     }
-
-    setVolunteerForm({
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-      occupation: "",
-      message: "",
-    });
-    triggerSuccesConfetti();
-    setIsVolunteering(false);
   };
 
   const handleVolunteerSubmit = async (e: React.FormEvent) => {

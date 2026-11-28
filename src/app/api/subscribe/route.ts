@@ -21,35 +21,36 @@ export async function POST(req: Request) {
     console.log(`🕒 Timestamp: ${new Date().toISOString()}`);
     console.log("========================================");
 
-    // Append to local subscribers.json
-    const subsFilePath = path.join(process.cwd(), "subscribers.json");
-    let subscribers: Array<{ email: string; date: string }> = [];
-    if (fs.existsSync(subsFilePath)) {
-      try {
-        subscribers = JSON.parse(fs.readFileSync(subsFilePath, "utf8"));
-      } catch {
-        subscribers = [];
-      }
+    // 1. Permanently record newsletter subscriber to MongoDB Atlas
+    const db = await getDb();
+    if (!db) {
+      return NextResponse.json(
+        { error: "Database connection unavailable. Please check MONGODB_URI configuration." },
+        { status: 503 }
+      );
     }
 
-    if (!subscribers.some((s) => s.email.toLowerCase() === email.toLowerCase())) {
-      subscribers.push({ email: email.toLowerCase(), date: new Date().toISOString() });
-      fs.writeFileSync(subsFilePath, JSON.stringify(subscribers, null, 2), "utf8");
-    }
+    await db.collection("subscribers").updateOne(
+      { email: email.toLowerCase() },
+      { $setOnInsert: { email: email.toLowerCase(), subscribedAt: new Date() } },
+      { upsert: true }
+    );
+    console.log("✅ Subscriber saved to MongoDB Atlas (subscribers collection)");
 
-    // 2. Permanently record newsletter subscriber to MongoDB Atlas
+    // 2. Optional local JSON backup (safe on read-only serverless environments)
     try {
-      const db = await getDb();
-      if (db) {
-        await db.collection("subscribers").updateOne(
-          { email: email.toLowerCase() },
-          { $setOnInsert: { email: email.toLowerCase(), subscribedAt: new Date() } },
-          { upsert: true }
-        );
-        console.log("✅ Subscriber saved to MongoDB Atlas (subscribers collection)");
+      const subsFilePath = path.join(process.cwd(), "subscribers.json");
+      let subscribers: Array<{ email: string; date: string }> = [];
+      if (fs.existsSync(subsFilePath)) {
+        subscribers = JSON.parse(fs.readFileSync(subsFilePath, "utf8"));
       }
-    } catch (dbErr) {
-      console.warn("⚠️ MongoDB Atlas write warning (subscribers):", dbErr);
+
+      if (!subscribers.some((s) => s.email.toLowerCase() === email.toLowerCase())) {
+        subscribers.push({ email: email.toLowerCase(), date: new Date().toISOString() });
+        fs.writeFileSync(subsFilePath, JSON.stringify(subscribers, null, 2), "utf8");
+      }
+    } catch {
+      // Ignore on read-only serverless filesystems
     }
 
     const smtpHost = process.env.SMTP_HOST;

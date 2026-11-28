@@ -24,56 +24,53 @@ export async function POST(req: Request) {
     console.log(`🕒 Timestamp: ${new Date().toISOString()}`);
     console.log("========================================");
 
-    // 1. Permanently record inquiry to local inquiries.json storage
-    const inquiriesFilePath = path.join(process.cwd(), "inquiries.json");
-    let inquiries: Array<{
-      id: string;
-      name: string;
-      email: string;
-      phone: string;
-      message: string;
-      timestamp: string;
-    }> = [];
-
-    if (fs.existsSync(inquiriesFilePath)) {
-      try {
-        inquiries = JSON.parse(fs.readFileSync(inquiriesFilePath, "utf8"));
-      } catch {
-        inquiries = [];
-      }
+    // 1. Permanently record to MongoDB Atlas cloud database first
+    const db = await getDb();
+    if (!db) {
+      return NextResponse.json(
+        { error: "Database connection unavailable. Please check MONGODB_URI configuration." },
+        { status: 503 }
+      );
     }
 
-    inquiries.unshift({
-      id: `inq_${Date.now()}`,
+    await db.collection("inquiries").insertOne({
       name,
       email,
       phone: phone || "N/A",
       message,
-      timestamp: new Date().toISOString(),
+      channel: channel || "Web Form",
+      createdAt: new Date(),
     });
+    console.log("✅ Contact inquiry saved to MongoDB Atlas (inquiries collection)");
 
-    fs.writeFileSync(
-      inquiriesFilePath,
-      JSON.stringify(inquiries, null, 2),
-      "utf8"
-    );
-
-    // 2. Permanently record to MongoDB Atlas cloud database
+    // 2. Optional local JSON backup (safe on read-only serverless environments like Vercel)
     try {
-      const db = await getDb();
-      if (db) {
-        await db.collection("inquiries").insertOne({
-          name,
-          email,
-          phone: phone || "N/A",
-          message,
-          channel: channel || "Web Form",
-          createdAt: new Date(),
-        });
-        console.log("✅ Contact inquiry saved to MongoDB Atlas (inquiries collection)");
+      const inquiriesFilePath = path.join(process.cwd(), "inquiries.json");
+      let inquiries: Array<{
+        id: string;
+        name: string;
+        email: string;
+        phone: string;
+        message: string;
+        timestamp: string;
+      }> = [];
+
+      if (fs.existsSync(inquiriesFilePath)) {
+        inquiries = JSON.parse(fs.readFileSync(inquiriesFilePath, "utf8"));
       }
-    } catch (dbErr) {
-      console.warn("⚠️ MongoDB Atlas write warning (fallback kept in JSON):", dbErr);
+
+      inquiries.unshift({
+        id: `inq_${Date.now()}`,
+        name,
+        email,
+        phone: phone || "N/A",
+        message,
+        timestamp: new Date().toISOString(),
+      });
+
+      fs.writeFileSync(inquiriesFilePath, JSON.stringify(inquiries, null, 2), "utf8");
+    } catch {
+      // Ignore on read-only serverless filesystems (e.g. Vercel)
     }
 
     // 3. Dispatch email notification via SMTP (if configured in .env.local)

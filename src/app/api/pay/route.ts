@@ -7,7 +7,14 @@ export async function GET(req: Request) {
     const donorName = searchParams.get("name") || "Well-wisher";
 
     const accountName = process.env.DPF_ACCOUNT_NAME || "DEV PRABHA FOUNDATION";
-    const upiId = process.env.DPF_UPI_ID || "devprabhafoundation@pnb";
+    const upiId = process.env.DPF_UPI_ID || process.env.UPI_ID || "";
+
+    if (!upiId) {
+      return NextResponse.json(
+        { error: "Official UPI ID is not configured in environment variables." },
+        { status: 503 }
+      );
+    }
 
     const upiUri = `upi://pay?pa=${encodeURIComponent(
       upiId
