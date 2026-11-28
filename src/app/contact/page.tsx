@@ -88,7 +88,7 @@ export default function ContactPage() {
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await executeInquiry(false);
+    await executeInquiry(true);
   };
 
   return (
